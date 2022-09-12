@@ -19,19 +19,20 @@ class Matrix:
 
 class AireDeJeu: 
 # adj pour 'aire de jeu'
-    def __init__(self, matrix):
-        self.matriceDuJeu = matrix
+    def __init__(self):
         self.ligne = Matrix.largeur
 
+    def afficherMatrix(self, matrix):
+        self.matriceDuJeu = matrix
         for i in range(0, Matrix.longueur * Matrix.largeur):
             # a chaque 8 valeur change de ligne
             if i % self.ligne == 0:
                 print('\n')
-
             # print chaque valeur de matrice
             print(self.matriceDuJeu.matrix[i], end = ' ')
 
 
 matrix = Matrix() # creer une vairable matrice
 
-AireDeJeu(matrix) # afficher cette variable
+aire = AireDeJeu() # afficher cette variable
+aire.afficherMatrix(matrix)
