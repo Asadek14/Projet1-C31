@@ -1,3 +1,4 @@
+from docteur import Docteur 
 # Creer et initializer une liste de taille 6 x 8 a zero
 class Matrix:
 
@@ -10,7 +11,10 @@ class Matrix:
 
         self.matrix = list()
         for i in range(0, self.longueur * self.largeur):
-            self.matrix.append(0)
+            if i == Docteur.positionDocteur:
+                self.matrix.append(Docteur.docteur)
+            else:
+                self.matrix.append(0)
 
     # fonction afficher matrice
     def showMatrix(self):
@@ -28,7 +32,6 @@ class AireDeJeu:
             # a chaque 8 valeur change de ligne
             if i % self.ligne == 0:
                 print('\n')
-            # print chaque valeur de matrice
             print(self.matriceDuJeu.matrix[i], end = ' ')
 
 
