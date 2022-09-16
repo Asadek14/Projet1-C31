@@ -1,100 +1,74 @@
 import os
 import keyboard
 
-from Modele import Docteur 
-# Creer et initializer une liste de taille 6 x 8 a zero
-        
-class Matrix:
-    
-    longueur = 5
-    largeur = 5
+from VueJeu import AireDeJeu 
+from Modele import Docteur, Matrix
 
-    # le constructeur
-    def __init__(self, doc):
-        
-        self.matrix = list()
-        for i in range(0, self.longueur * self.largeur):
-            if i == doc.positionDocInitiale:
-                self.matrix.append(doc.valeurDoc)
-            else:
-                self.matrix.append(0)
+
+# Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
+class Postions: 
+    
+    def __init__(self):
+        pass         
                 
-    def setDocPosition(self, doc):
-        self.matrix[doc.positionDocActuellle] = doc.valeurDoc
-        
-    def annuleDocAnciennePosition(self, doc):
-        self.matrix[doc.positionDocAncienne] = 0
+    def setDocPosition(self, matrix, doc):
+        matrix.matrix[doc.positionDocActuellle] = Docteur.VALEUR_DOC
+        matrix.matrix[doc.positionDocAncienne] = 0
         doc.positionDocAncienne = doc.positionDocActuellle
         
-
-    # fonction afficher matrice
-    def showMatrix(self):
-        print(self.matrix)
-
-
-class AireDeJeu: 
-# adj pour 'aire de jeu'
-    def __init__(self):
-        self.ligne = Matrix.largeur
-
-    def afficherMatrix(self, matrix):
-        self.matriceDuJeu = matrix
-        for i in range(0, Matrix.longueur * Matrix.largeur):
-            # a chaque 8 valeur change de ligne
-            if i % self.ligne == 0:
-                print('\n')
-            print(self.matriceDuJeu.matrix[i], end = ' ')
-            
-        print("\n")
-            
-
-
+    def setDalekPosition(self, matrix, dalek):
+        pass
+    
+    
+# Cette classe va s'occuper de bouger les characteres de jeu (Docteur/Daleks/TasDeFerailles) dans la matrice si les conditions sont valides
 class Mouvement:
     
     def __init__(self):
         pass
     
-    def moveDoc(self, doc, matrix, adj):
+    def moveDoc(self, matrix, doc, adj):
         
         success = False
         if keyboard.is_pressed("left arrow"):
-            if doc.positionDocActuellle % Matrix.longueur != 0:
+            if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
                 doc.positionDocActuellle -= 1 
                 success = True         
         
         elif keyboard.is_pressed("right arrow"):
-            if doc.positionDocActuellle % Matrix.longueur != Matrix.longueur - 1:
+            if doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
                 doc.positionDocActuellle += 1
                 success = True   
                 
         elif keyboard.is_pressed("up arrow"):
-            if doc.positionDocActuellle - Matrix.longueur >= 0:
-                doc.positionDocActuellle -= Matrix.longueur 
+            if doc.positionDocActuellle - Matrix.LONGUEUR >= 0:
+                doc.positionDocActuellle -= Matrix.LONGUEUR 
                 success = True       
                 
         elif keyboard.is_pressed("down arrow"):
-            if doc.positionDocActuellle + Matrix.longueur <= (Matrix.longueur * Matrix.largeur) - 1:
-                doc.positionDocActuellle += Matrix.longueur
+            if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1:
+                doc.positionDocActuellle += Matrix.LONGUEUR
                 success = True   
         
         
         if success == True:
-            matrix.setDocPosition(doc)
-            matrix.annuleDocAnciennePosition(doc)
+            positions.setDocPosition(matrix, doc)
             os.system('cls')
-            adj.afficherMatrix(matrix)
-                
-                
-os.system('cls')          
+            adj.afficherMatrix(matrix)       
 
+
+
+# Objets de Controleur
+mouvement = Mouvement()
+positions = Postions()
+
+# Objets de Modele
+matrix = Matrix()
 doc = Docteur()
 
-matrix = Matrix(doc) # creer une vairable matrice
-adj = AireDeJeu() # afficher cette variable
+# Objets de VueJeu
+adj = AireDeJeu()
+
 adj.afficherMatrix(matrix)
 
-move = Mouvement()
-
-while 1 > 0:
-    
-    move.moveDoc(doc, matrix, adj)
+while True:
+    mouvement.moveDoc(matrix, doc, adj)

@@ -1,38 +1,36 @@
 import random
 
+
  # créer et initialiser le docteur
 class Docteur:
 
+    POSITION_DOC_INITIALE = 12
+    VALEUR_DOC = 1
+
     def __init__(self):
-        self.positionDocActuellle = 12
-        self.positionDocAncienne = self.positionDocActuellle
-        self.positionDocInitiale = 12
-        self.valeurDoc = 1
+      self.positionDocActuellle = 12
+      self.positionDocAncienne = self.positionDocActuellle
+      
         
-
-#     # variables statiques  
-#     valeurDocteur = 1
-#     positionDocteur = 17
+        
+class Matrix:
     
-        
-#     def setDocteurMatrix(self):
-#         self.matrix.setDocteurMatrix()
+    LONGUEUR = 5
+    LARGEUR = 5
 
-
-
-
-# matrix = aireDeJeu.Matrix() # creer une vairable matrice
-# aire = aireDeJeu.AireDeJeu() # afficher cette variable
-# aire.afficherMatrix(matrix)
-
-# doc = Docteur()
-
-# aire.afficherMatrix(matrix)
-
-
-
-#from aireDeJeu import Matrix
-
+    # le constructeur
+    def __init__(self):
+          
+        # Creer et initializer une liste de taille 6 x 8 a zero
+        self.matrix = list()
+        for i in range(0, self.LONGUEUR * self.LARGEUR):
+            if i == Docteur.POSITION_DOC_INITIALE:
+                self.matrix.append(Docteur.VALEUR_DOC)
+            else:
+                self.matrix.append(0)
+                
+                
+                
 class Daleks:
 
   # generateur de positions aléatoires pour les daleks
