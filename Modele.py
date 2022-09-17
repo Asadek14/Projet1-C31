@@ -49,3 +49,7 @@ class Daleks:
     #0, Matrix.longueur * Matrix.largeur
     print(positionDalek)
     i += 1
+
+
+class Zappeur:
+    pass
