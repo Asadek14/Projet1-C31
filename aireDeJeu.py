@@ -32,6 +32,6 @@ class AireDeJeu:
             print(self.matriceDuJeu.matrix[i], end = ' ')
 
 
-matrix = Matrix() # creer une vairable matrice
+matrix = Matrix() # creer une variable matrice
 
 AireDeJeu(matrix) # afficher cette variable
