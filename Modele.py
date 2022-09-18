@@ -1,3 +1,4 @@
+from pydoc import Doc
 import random
 
 
@@ -23,6 +24,7 @@ class Matrix:
           
         # Creer et initializer une liste de taille 6 x 8 a zero
         self.matrix = list()
+        
         for i in range(0, self.LONGUEUR * self.LARGEUR):
             if i == Docteur.POSITION_DOC_INITIALE:
                 self.matrix.append(Docteur.VALEUR_DOC)
@@ -33,19 +35,34 @@ class Matrix:
                 
 class Daleks:
 
-  # generateur de positions aléatoires pour les daleks
-  i = 0
-  # positionsOccupe = [0]
+    VALEUR_DALEKS = 2
+    positionOccupe = []
 
-  while i < 5:
-    positionDalek = random.randint(0, 47)
-    # positionsOccupe[i] += positionDalek
+    def __init__(self):
+        pass
 
-    # verifier si la position est deja occupee 
-    # x = 0  
-    # while x < 5:
-    #   if positionDalek == positionsOccupe[x]:
-    #     break
-    #0, Matrix.longueur * Matrix.largeur
-    print(positionDalek)
-    i += 1
+    # generateur de positions aléatoires pour les daleks
+    def genererDaleks(self):
+
+        i = 0
+
+        while i < 5:      # 5 daleks * valeur du niveau
+            positionDalek = random.randint(0, Matrix.LARGEUR * Matrix.LONGUEUR)
+
+            # verifier si la position est la position initiale du docteur
+            if positionDalek == Docteur.POSITION_DOC_INITIALE:
+                continue
+
+            # verifier si la position est deja occupee
+            existe = positionDalek in self.positionOccupe
+            if existe:
+                continue
+
+            self.positionOccupe.append(positionDalek)
+            # Controleur.Postions.setDalekPosition(Controleur.matrix, Controleur.daleks)
+            print(self.positionOccupe[i])
+            i += 1
+
+    def positionerDaleks(self, matrix):
+        for x in range(0, 5):
+            matrix.matrix[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS

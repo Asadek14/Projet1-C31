@@ -2,7 +2,7 @@ import os
 import keyboard
 
 from VueJeu import AireDeJeu 
-from Modele import Docteur, Matrix
+from Modele import Daleks, Docteur, Matrix
 
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
@@ -17,6 +17,9 @@ class Postions:
         doc.positionDocAncienne = doc.positionDocActuellle
         
     def setDalekPosition(self, matrix, dalek):
+        # matrix.matrix[Modele.Da] = Daleks.VALEUR_DOC
+        # matrix.matrix[doc.positionDocAncienne] = 0
+        # doc.positionDocAncienne = doc.positionDocActuellle
         pass
     
     
@@ -64,6 +67,12 @@ positions = Postions()
 # Objets de Modele
 matrix = Matrix()
 doc = Docteur()
+daleks = Daleks()
+
+# Generer des positions aleatoires pour les daleks 
+daleks.genererDaleks()
+daleks.positionerDaleks(matrix)
+
 
 # Objets de VueJeu
 adj = AireDeJeu()
