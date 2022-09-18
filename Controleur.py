@@ -97,3 +97,6 @@ adj.afficherMatrix(matrix)
 
 while True:
     mouvement.moveDoc(matrix, doc, adj)
+
+class Teleporteur:
+    pass
