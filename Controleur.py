@@ -4,7 +4,7 @@ import keyboard
 import time
 
 from VueJeu import AireDeJeu 
-from Modele import Docteur, Matrix
+from Modele import Daleks, Docteur, Matrix
 
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
@@ -18,8 +18,9 @@ class Positions:
         matrix.matrix[doc.positionDocAncienne] = 0
         doc.positionDocAncienne = doc.positionDocActuellle
         
-    def setDalekPosition(self, matrix, dalek):
-        pass
+    def setDalekPosition(self, matrix):
+        for x in range(0, 5):
+            matrix.matrix[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
     
     
 # Cette classe va s'occuper de bouger les characteres de jeu (Docteur/Daleks/TasDeFerailles) dans la matrice si les conditions sont valides
@@ -87,6 +88,12 @@ positions = Positions()
 # Objets de Modele
 matrix = Matrix()
 doc = Docteur()
+daleks = Daleks()
+
+# Generer des positions aleatoires pour les daleks 
+daleks.genererDaleks()
+positions.setDalekPosition(matrix)
+
 
 # Objets de VueJeu
 adj = AireDeJeu()
