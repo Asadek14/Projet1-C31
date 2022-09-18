@@ -96,9 +96,10 @@ doc = Docteur()
 
 # Objets de VueJeu
 adj = AireDeJeu()
+menu = VueMenu()
 
 adj.afficherMatrix(matrix)
-start.start()
+menu.afficherMenu()
 while True:
     mouvement.moveDoc(matrix, doc, adj)
 

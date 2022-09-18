@@ -17,7 +17,7 @@ class AireDeJeu:
 
 #class VueMenu
 class VueMenu:
-    def show() :
+    def afficherMenu() :
         print("Jeu des Daleks")
         print("\n")
         print("Inserer nom :")
