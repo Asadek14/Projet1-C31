@@ -1,12 +1,14 @@
 import os
+from turtle import position
 import keyboard
+import time
 
 from VueJeu import AireDeJeu 
 from Modele import Docteur, Matrix
 
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
-class Postions: 
+class Positions: 
     
     def __init__(self):
         pass         
@@ -47,19 +49,40 @@ class Mouvement:
         elif keyboard.is_pressed("down arrow"):
             if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1:
                 doc.positionDocActuellle += Matrix.LONGUEUR
-                success = True   
+                success = True  
+
+        elif keyboard.is_pressed("Home"):
+            if (doc.positionDocActuellle - Matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
+                doc.positionDocActuellle -=  Matrix.LONGUEUR + 1
+                success = True  
+
+        elif keyboard.is_pressed("Page_Up"):
+            if (doc.positionDocActuellle - Matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
+                doc.positionDocActuellle -=  Matrix.LONGUEUR - 1
+                success = True 
+
+        elif keyboard.is_pressed("End"):
+            if (doc.positionDocActuellle + Matrix.LONGUEUR) - 1 <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
+                doc.positionDocActuellle +=  Matrix.LONGUEUR - 1
+                success = True 
+
+        elif keyboard.is_pressed("Page_Down"):
+            if (doc.positionDocActuellle + Matrix.LONGUEUR) + 1 <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
+                doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
+                success = True 
         
         
         if success == True:
             positions.setDocPosition(matrix, doc)
             os.system('cls')
-            adj.afficherMatrix(matrix)       
+            adj.afficherMatrix(matrix)
+            time.sleep(0.5)      
 
 
 
 # Objets de Controleur
 mouvement = Mouvement()
-positions = Postions()
+positions = Positions()
 
 # Objets de Modele
 matrix = Matrix()
