@@ -1,8 +1,33 @@
 import os
 import keyboard
 
-from VueJeu import AireDeJeu 
+from VueJeu import AireDeJeu, VueMenu 
 from Modele import Docteur, Matrix
+
+#Code Aurelien
+class MenuControlleur:
+    def start(self) :
+        # Afficher le menu
+        VueMenu.show()
+        # On récupère le nom
+        nom = input()
+
+        # On recupere le choix du niveau
+        choix = input()
+        if choix == "1" :
+            return 1 
+        elif choix == "2" :
+            return 2
+        
+        elif choix == "3":
+            return 3
+            
+        else :
+            print("Votre choix n'est pas valide. Veuillez recommencer.")
+            input("Appuyez sur n'importe quelle touche pour continuer.")
+            return self.start()
+
+
 
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
