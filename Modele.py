@@ -23,13 +23,13 @@ class Matrix:
     def __init__(self):
           
         # Creer et initializer une liste de taille 6 x 8 a zero
-        self.matrix = list()
+        self.array = list()
         
         for i in range(0, self.LONGUEUR * self.LARGEUR):
-            if i == Docteur.POSITION_DOC_INITIALE:
-                self.matrix.append(Docteur.VALEUR_DOC)
+            if i != Docteur.POSITION_DOC_INITIALE:
+                self.array.append(0)
             else:
-                self.matrix.append(0)
+                self.array.append(Docteur.VALEUR_DOC)
                 
                 
                 
@@ -47,7 +47,7 @@ class Daleks:
         i = 0
 
         while i < 5:      # 5 daleks * valeur du niveau
-            positionDalek = random.randint(0, Matrix.LARGEUR * Matrix.LONGUEUR)
+            positionDalek = random.randint(0, (Matrix.LARGEUR * Matrix.LONGUEUR) - 1)
 
             # verifier si la position est la position initiale du docteur
             if positionDalek == Docteur.POSITION_DOC_INITIALE:
