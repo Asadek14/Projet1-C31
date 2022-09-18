@@ -1,31 +1,35 @@
 import os
 import keyboard
 
-from VueJeu import AireDeJeu, VueMenu 
+from VueJeu import AireDeJeu, VueMenu
 from Modele import Docteur, Matrix
 
 #Code Aurelien
 class MenuControlleur:
-    def start(self) :
-        # Afficher le menu
-        VueMenu.show()
-        # On récupère le nom
-        nom = input()
-
-        # On recupere le choix du niveau
-        choix = input()
-        if choix == "1" :
-            return 1 
-        elif choix == "2" :
-            return 2
+    def __init__(self) :
+        pass
+    def start() :
         
-        elif choix == "3":
-            return 3
+        # Afficher le menu
+       vueMenu = VueMenu()
+       vueMenu.show()
+    #     # On récupère le nom
+    #    self.nom = input()
+
+    #     # On recupere le choix du niveau
+    #    self.choix = input()
+    #    if self.choix == "1" :
+    #         return 1 
+    #    elif self.choix == "2" :
+    #         return 2
+        
+    #    elif self.choix == "3":
+    #         return 3
             
-        else :
-            print("Votre choix n'est pas valide. Veuillez recommencer.")
-            input("Appuyez sur n'importe quelle touche pour continuer.")
-            return self.start()
+    #    else :
+    #         print("Votre choix n'est pas valide. Veuillez recommencer.")
+    #         input("Appuyez sur n'importe quelle touche pour continuer.")
+    #         return self.start()
 
 
 
@@ -85,7 +89,7 @@ class Mouvement:
 # Objets de Controleur
 mouvement = Mouvement()
 positions = Postions()
-
+start = MenuControlleur()
 # Objets de Modele
 matrix = Matrix()
 doc = Docteur()
@@ -94,9 +98,10 @@ doc = Docteur()
 adj = AireDeJeu()
 
 adj.afficherMatrix(matrix)
-
+start.start()
 while True:
     mouvement.moveDoc(matrix, doc, adj)
 
 class Teleporteur:
     pass
+
