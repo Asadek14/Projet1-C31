@@ -6,30 +6,18 @@ from Modele import Docteur, Matrix
 
 #Code Aurelien
 class MenuControlleur:
-    def __init__(self) :
-        pass
+    def __init__(self):
+        pass 
+
     def start() :
         
         # Afficher le menu
        vueMenu = VueMenu()
-       vueMenu.show()
-    #     # On récupère le nom
-    #    self.nom = input()
-
+       vueMenu.afficherMenu()
     #     # On recupere le choix du niveau
-    #    self.choix = input()
-    #    if self.choix == "1" :
-    #         return 1 
-    #    elif self.choix == "2" :
-    #         return 2
-        
-    #    elif self.choix == "3":
-    #         return 3
+      
             
-    #    else :
-    #         print("Votre choix n'est pas valide. Veuillez recommencer.")
-    #         input("Appuyez sur n'importe quelle touche pour continuer.")
-    #         return self.start()
+    
 
 
 
@@ -100,6 +88,18 @@ menu = VueMenu()
 
 adj.afficherMatrix(matrix)
 menu.afficherMenu()
+#Teleportage si utilisateur veut l'utiliser:
+#a utiliser avec la classe teleporteur
+if menu.niveau == '1':#facile
+    print("facile")
+    #transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
+elif menu.niveau == '2':#normal
+    print("normale")
+    #  idem mais on ne vérifie pas la proximité de Daleks 
+elif menu.niveau == '3':#difficile
+    print("difficile")
+    #téléportage est complètement aléatoire et donc on peut atterrir sur un Dalek
+
 while True:
     mouvement.moveDoc(matrix, doc, adj)
 

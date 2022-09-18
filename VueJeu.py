@@ -17,12 +17,15 @@ class AireDeJeu:
 
 #class VueMenu
 class VueMenu:
-    def afficherMenu() :
+    def afficherMenu(self) :
         print("Jeu des Daleks")
         print("\n")
         print("Inserer nom :")
-        print("Choisir mode de jeu pour commencer")
-        print("1 - Facile \n")
-        print("2 - Moyen\n")
-        print("3 - Difficile")
-        print("pointage record:")
+        self.nom = input()
+        #print(self.nom)
+        print("Choisir mode de jeu pour commencer")#-> Va determiner le mode de teleportage
+        print("1 - Facile \n")#si facile le teleporteur transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
+        print("2 - Moyen\n")#  idem mais on ne vérifie pas la proximité de Daleks 
+        print("3 - Difficile")#téléportage est complètement aléatoire et donc on peut atterrir sur un Dalek
+        self.niveau = input("choix niveau: ")
+        
