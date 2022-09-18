@@ -62,7 +62,3 @@ class Daleks:
             # Controleur.Postions.setDalekPosition(Controleur.matrix, Controleur.daleks)
             print(self.positionOccupe[i])
             i += 1
-
-    def positionerDaleks(self, matrix):
-        for x in range(0, 5):
-            matrix.matrix[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS

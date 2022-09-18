@@ -16,11 +16,9 @@ class Postions:
         matrix.matrix[doc.positionDocAncienne] = 0
         doc.positionDocAncienne = doc.positionDocActuellle
         
-    def setDalekPosition(self, matrix, dalek):
-        # matrix.matrix[Modele.Da] = Daleks.VALEUR_DOC
-        # matrix.matrix[doc.positionDocAncienne] = 0
-        # doc.positionDocAncienne = doc.positionDocActuellle
-        pass
+    def setDalekPosition(self, matrix):
+        for x in range(0, 5):
+            matrix.matrix[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
     
     
 # Cette classe va s'occuper de bouger les characteres de jeu (Docteur/Daleks/TasDeFerailles) dans la matrice si les conditions sont valides
@@ -71,7 +69,7 @@ daleks = Daleks()
 
 # Generer des positions aleatoires pour les daleks 
 daleks.genererDaleks()
-daleks.positionerDaleks(matrix)
+positions.setDalekPosition(matrix)
 
 
 # Objets de VueJeu
