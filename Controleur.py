@@ -1,9 +1,27 @@
 import os
 import keyboard
 
-from VueJeu import AireDeJeu 
+from VueJeu import AireDeJeu, VueMenu
 from Modele import Docteur, Matrix
 
+#Cette classe va s'occuper de teleporter le docteur a une cordonnée de l'aire de jeu aléatoire, dependant du mode de jeu choisi par l'utilisateur
+class Teleporteur:
+    def __init__(self, modeJeu):      
+        self.modeJeu = modeJeu
+
+    def teleportation(self):
+        while True:
+            try:
+                if keyboard.is_pressed('T'):
+                    if self.modeJeu == "F": # Facile
+                        pass #teleportation aleatoire selon les conditions
+                    elif self.modeJeu == "M": # Moyen
+                        pass
+                    elif self.modeJeu == "D": # Difficile
+                        pass
+                    break
+            except:
+                break
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
 class Postions: 
@@ -60,6 +78,7 @@ class Mouvement:
 # Objets de Controleur
 mouvement = Mouvement()
 positions = Postions()
+tp = Teleporteur()
 
 # Objets de Modele
 matrix = Matrix()
@@ -70,8 +89,7 @@ adj = AireDeJeu()
 
 adj.afficherMatrix(matrix)
 
+
+
 while True:
     mouvement.moveDoc(matrix, doc, adj)
-
-class Teleporteur:
-    pass
