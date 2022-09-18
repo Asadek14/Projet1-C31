@@ -6,7 +6,7 @@ class AireDeJeu:
         self.ligne = Matrix.LONGUEUR
 
     def afficherMatrix(self, matrix):
-        for i in range(0, Matrix.LONGUEUR * Matrix.LONGUEUR):
+        for i in range(0, Matrix.LONGUEUR * Matrix.LARGEUR):
             # a chaque 8 valeur change de ligne
             if i % self.ligne == 0:
                 print('\033[0;37;40m\n')

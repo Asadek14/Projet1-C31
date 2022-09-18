@@ -16,14 +16,15 @@ class Docteur:
         
 class Matrix:
     
-    LONGUEUR = 5
-    LARGEUR = 5
+    LONGUEUR = 10
+    LARGEUR = 6
+    array = list()
 
     # le constructeur
     def __init__(self):
           
         # Creer et initializer une liste de taille 6 x 8 a zero
-        self.array = list()
+        
         
         for i in range(0, self.LONGUEUR * self.LARGEUR):
             if i != Docteur.POSITION_DOC_INITIALE:

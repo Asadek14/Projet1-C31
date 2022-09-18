@@ -59,7 +59,7 @@ class Mouvement:
                 success = True       
                 
         elif keyboard.is_pressed("down arrow"):
-            if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1:
+            if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1:
                 doc.positionDocActuellle += Matrix.LONGUEUR
                 success = True  
 
@@ -74,12 +74,12 @@ class Mouvement:
                 success = True 
 
         elif keyboard.is_pressed("End"):
-            if (doc.positionDocActuellle + Matrix.LONGUEUR) - 1 <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
+            if (doc.positionDocActuellle + Matrix.LONGUEUR) - 1 <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
                 doc.positionDocActuellle +=  Matrix.LONGUEUR - 1
                 success = True 
 
         elif keyboard.is_pressed("Page_Down"):
-            if (doc.positionDocActuellle + Matrix.LONGUEUR) + 1 <= (Matrix.LONGUEUR * Matrix.LONGUEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
+            if (doc.positionDocActuellle + Matrix.LONGUEUR) + 1 <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
                 doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
                 success = True 
         
