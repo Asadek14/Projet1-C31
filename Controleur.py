@@ -53,8 +53,11 @@ class Positions:
         return positionsComparaison    
     
     def getPostionsDoc(self):
-            
+        
+        colomns = Docteur.positionDocActuellle
+        ranges = 0
         positionsComparaison = []
+        
         while colomns >= Matrix.LONGUEUR:
             colomns -= Matrix.LONGUEUR
             ranges += 1
@@ -62,7 +65,7 @@ class Positions:
         positionsComparaison.append(colomns)
         positionsComparaison.append(ranges)
         
-        return positionsComparaison ##########################################
+        return positionsComparaison
         
                 
     
@@ -122,9 +125,31 @@ class Mouvement:
             adj.afficherMatrix(matrix)
             time.sleep(0.20)      
             
-    def moveDalek(self, positionCompares):
-        for i in range(0, 5):
-            pass #########################################
+    def moveDalek(self, positionsDaleks, positionDoc):
+        for i in range(0, 5): # multiplie par niveau
+            if positionsDaleks[i][0] == positionDoc[0]:
+                if positionsDaleks[i][1] > positionDoc[1]:
+                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR
+                else:
+                    Daleks.positionOccupe[i] += Matrix.LONGUEUR
+                    
+            elif positionsDaleks[i][1] == positionDoc[1]:
+                if positionsDaleks[i][0] > positionDoc[0]:
+                    Daleks.positionOccupe[i] -= 1
+                else:
+                    Daleks.positionOccupe[i] += 1
+                    
+            elif positionsDaleks[i][1] > positionDoc[1]:
+                if positionsDaleks[i][0] > positionDoc[0]:
+                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR + 1
+                else:
+                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR - 1
+                    
+            elif positionsDaleks[i][1] < positionDoc[1]:
+                if positionsDaleks[i][0] > positionDoc[0]:
+                    Daleks.positionOccupe[i] += Matrix.LONGUEUR - 1
+                else:
+                    Daleks.positionOccupe[i] += Matrix.LONGUEUR + 1
             
             
 
@@ -154,3 +179,6 @@ print(positions.getPostionsDaleks())
 
 while True:
     mouvement.moveDoc(matrix, doc, adj)
+    mouvement.moveDalek(positions.getPostionsDaleks(), positions.getPostionsDoc())
+    positions.setDalekPosition(matrix)
+    
