@@ -2,6 +2,7 @@ import os
 from turtle import position
 import keyboard
 import time
+import subprocess
 
 from VueJeu import AireDeJeu 
 from Modele import Daleks, Docteur, Matrix
@@ -32,7 +33,38 @@ class Positions:
     def setDalekPosition(self, matrix):
         for x in range(0, 5):
             matrix.array[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
+            
+    def getPostionsDaleks(self):
+        
+        positionsComparaison = []
+        for i in range(0, 5):
+            colomns = Daleks.positionOccupe[i]
+            ranges = 0
+            tab = []
+            
+            while colomns >= Matrix.LONGUEUR:
+                colomns -= Matrix.LONGUEUR
+                ranges += 1
+        
+            tab.append(colomns)
+            tab.append(ranges)
+            positionsComparaison.append(tab)
+        
+        return positionsComparaison    
     
+    def getPostionsDoc(self):
+            
+        positionsComparaison = []
+        while colomns >= Matrix.LONGUEUR:
+            colomns -= Matrix.LONGUEUR
+            ranges += 1
+    
+        positionsComparaison.append(colomns)
+        positionsComparaison.append(ranges)
+        
+        return positionsComparaison ##########################################
+        
+                
     
 # Cette classe va s'occuper de bouger les characteres de jeu (Docteur/Daleks/TasDeFerailles) dans la matrice si les conditions sont valides
 class Mouvement:
@@ -89,6 +121,12 @@ class Mouvement:
             os.system('cls')
             adj.afficherMatrix(matrix)
             time.sleep(0.20)      
+            
+    def moveDalek(self, positionCompares):
+        for i in range(0, 5):
+            pass #########################################
+            
+            
 
 
 
@@ -111,6 +149,8 @@ adj = AireDeJeu()
 
 os.system('cls')
 adj.afficherMatrix(matrix)
+
+print(positions.getPostionsDaleks())
 
 while True:
     mouvement.moveDoc(matrix, doc, adj)
