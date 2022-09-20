@@ -16,8 +16,8 @@ class Docteur:
         
 class Matrix:
     
-    LONGUEUR = 10
-    LARGEUR = 6
+    LONGUEUR = 11
+    LARGEUR = 7
     array = list()
 
     # le constructeur

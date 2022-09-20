@@ -8,11 +8,11 @@ class AireDeJeu:
     def afficherMatrix(self, matrix):
         for i in range(0, Matrix.LONGUEUR * Matrix.LARGEUR):
             # a chaque 8 valeur change de ligne
-            if i % self.ligne == 0:
+            if i % self.ligne == 0 and i != 0:
                 print('\033[0;37;40m\n')
 
             if matrix.array[i] == 1:
-                print('\033[0;37;44m  ', end = '\033[0;37;40m ')
+                print('\033[0;37;46m  ', end = '\033[0;37;40m ')
             elif matrix.array[i] == 2:
                 print('\033[0;37;41m  ', end = '\033[0;37;40m ')
             else:
