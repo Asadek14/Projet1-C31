@@ -5,12 +5,12 @@ import random
  # créer et initialiser le docteur
 class Docteur:
 
-    POSITION_DOC_INITIALE = 12
+    POSITION_DOC_INITIALE = 38
     VALEUR_DOC = 1
 
     def __init__(self):
-      self.positionDocActuellle = 12
-      self.positionDocAncienne = self.positionDocActuellle
+        self.positionDocActuellle = self.POSITION_DOC_INITIALE
+        self.positionDocAncienne = self.positionDocActuellle
       
         
         
@@ -38,6 +38,7 @@ class Daleks:
 
     VALEUR_DALEKS = 2
     positionOccupe = []
+    positionOccupeAncienne = [0,0,0,0,0]
 
     def __init__(self):
         pass
@@ -60,6 +61,7 @@ class Daleks:
                 continue
 
             self.positionOccupe.append(positionDalek)
+            # self.positionOccupeAncienne.append(positionDalek)
             # Controleur.Postions.setDalekPosition(Controleur.matrix, Controleur.daleks)
             print(self.positionOccupe[i])
             i += 1
