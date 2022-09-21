@@ -7,10 +7,8 @@ class Docteur:
 
     POSITION_DOC_INITIALE = 12
     VALEUR_DOC = 1
-
-    def __init__(self):
-      self.positionDocActuellle = 12
-      self.positionDocAncienne = self.positionDocActuellle
+    positionDocActuellle = 12
+    positionDocAncienne = positionDocActuellle
       
         
         
