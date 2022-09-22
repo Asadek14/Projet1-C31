@@ -98,43 +98,51 @@ class Mouvement:
         success = False
         if keyboard.is_pressed("left arrow"):
             if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
-                doc.positionDocActuellle -= 1 
-                success = True         
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
+                    doc.positionDocActuellle -= 1 
+                    success = True         
         
         elif keyboard.is_pressed("right arrow"):
             if doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
-                doc.positionDocActuellle += 1
-                success = True   
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
+                    doc.positionDocActuellle += 1
+                    success = True   
                 
         elif keyboard.is_pressed("up arrow"):
             if doc.positionDocActuellle - Matrix.LONGUEUR >= 0:
-                doc.positionDocActuellle -= Matrix.LONGUEUR 
-                success = True       
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - Matrix.LONGUEUR):
+                    doc.positionDocActuellle -= Matrix.LONGUEUR 
+                    success = True       
                 
         elif keyboard.is_pressed("down arrow"):
             if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1:
-                doc.positionDocActuellle += Matrix.LONGUEUR
-                success = True  
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + Matrix.LONGUEUR):
+                    doc.positionDocActuellle += Matrix.LONGUEUR
+                    success = True  
 
         elif keyboard.is_pressed("Home"):
             if (doc.positionDocActuellle - Matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
-                doc.positionDocActuellle -=  Matrix.LONGUEUR + 1
-                success = True  
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (Matrix.LONGUEUR + 1)):
+                    doc.positionDocActuellle -=  Matrix.LONGUEUR + 1
+                    success = True  
 
         elif keyboard.is_pressed("Page_Up"):
             if (doc.positionDocActuellle - Matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
-                doc.positionDocActuellle -=  Matrix.LONGUEUR - 1
-                success = True 
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (Matrix.LONGUEUR - 1)):
+                    doc.positionDocActuellle -=  Matrix.LONGUEUR - 1
+                    success = True 
 
         elif keyboard.is_pressed("End"):
             if (doc.positionDocActuellle + Matrix.LONGUEUR) - 1 <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
-                doc.positionDocActuellle +=  Matrix.LONGUEUR - 1
-                success = True 
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (Matrix.LONGUEUR - 1)):
+                    doc.positionDocActuellle +=  Matrix.LONGUEUR - 1
+                    success = True 
 
         elif keyboard.is_pressed("Page_Down"):
             if (doc.positionDocActuellle + Matrix.LONGUEUR) + 1 <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
-                doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
-                success = True 
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (Matrix.LONGUEUR + 1)):
+                    doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
+                    success = True 
         
         
         if success == True:
@@ -143,8 +151,11 @@ class Mouvement:
             adj.afficherMatrix(matrix)
             time.sleep(1) 
             mouvement.moveDalek(positions.getPostionsDaleks(), positions.getPostionsDoc(doc))
+
             # verifier s'il y a des collisions
-            mouvement.verifierCollisionDalek()
+            mouvement.verifierCollisionDalek_Dalek()
+            mouvement.verifierCollisionDalek_Tf()
+
             positions.setTfPosition(matrix)
             positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
             os.system('cls')
@@ -180,7 +191,7 @@ class Mouvement:
                 else:
                     Daleks.positionOccupe[i] += Matrix.LONGUEUR + 1 # en bas a droite
             
-    def verifierCollisionDalek(self):
+    def verifierCollisionDalek_Dalek(self):
 
         # verifier les collision entre les daleks et les daleks
 
@@ -203,7 +214,7 @@ class Mouvement:
             else:
                 i +=1
 
-        # verifier les collisions entre les daleks et les tas de ferailles
+    def verifierCollisionDalek_Tf(self):
 
         nbrDeTf = len(tf.positionTF)
         nbrDeDaleks = len(daleks.positionOccupe)
@@ -223,18 +234,18 @@ class Mouvement:
 
         
 
-    def verifierCollisionDoc(self):
+    def verifierCollisionDoc_Dalek(self):
         pass
         # verifier les collisions entre les daleks et le docteur
 
+    def verifierCollisionDoc_Tf(self, positionDocActuelle):
+        for i in range(0, len(tf.positionTF)):
+            if positionDocActuelle == tf.positionTF[i]:
+                return False
+        return True
 
 
 
-
-
-
-    def placerTF(self, matrice):
-         tf.positionTF
 
 # Objets de Controleur
 mouvement = Mouvement()
@@ -249,6 +260,7 @@ tf = TasDeFeraille()
 # Generer des positions aleatoires pour les daleks 
 # daleks.genererDaleks()
 positions.setDalekPosition(matrix)
+positions.setTfPosition(matrix)
 
 
 

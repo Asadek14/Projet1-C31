@@ -84,7 +84,7 @@ class Daleks:
 class TasDeFeraille:
 
     VALEUR_TF = 3
-    positionTF = []
+    positionTF = [35]
 
     def __init__(self):
         pass
