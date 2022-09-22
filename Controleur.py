@@ -183,6 +183,7 @@ class Mouvement:
             
     def verifierCollision(self):
         daleks.positionOccupe.sort()
+        daleks.positionOccupeAncienne.sort()
         nbrDeDaleks = len(daleks.positionOccupe) - 1    # - 1 car on regarde le dernier indice avec le i + 1 dans la condition du if
 
         for i in range(0, nbrDeDaleks):
@@ -190,6 +191,8 @@ class Mouvement:
                 tf.positionTF.append(daleks.positionOccupe[i])
                 daleks.positionOccupe.remove(daleks.positionOccupe[i + 1])
                 daleks.positionOccupe.remove(daleks.positionOccupe[i])
+                daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i + 1])
+                daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i])
                 break
 
     def placerTF(self, matrice):
