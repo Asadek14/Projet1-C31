@@ -1,5 +1,7 @@
+from mimetypes import init
 from pydoc import Doc
 import random
+from turtle import position
 
 
  # créer et initialiser le docteur
@@ -38,7 +40,7 @@ class Daleks:
 
     VALEUR_DALEKS = 2
     positionOccupe = []
-    positionOccupeAncienne = [0,0,0,0,0]
+    positionOccupeAncienne = [0,0,0,0,0]    # est-ce utilisé?
 
     def __init__(self):
         pass
@@ -65,3 +67,10 @@ class Daleks:
             # Controleur.Postions.setDalekPosition(Controleur.matrix, Controleur.daleks)
             print(self.positionOccupe[i])
             i += 1
+
+class TasDeFeraille:
+
+    positionTF = []
+
+    def __init__(self):
+        pass
