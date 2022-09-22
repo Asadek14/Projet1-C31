@@ -150,9 +150,16 @@ class Mouvement:
             os.system('cls')
             adj.afficherMatrix(matrix)
             time.sleep(1) 
+            if mouvement.verifierCollisionDoc_Dalek():      # verifie si le docteur va sur le dalek
+                Matrix.gameOver = True
             mouvement.moveDalek(positions.getPostionsDaleks(), positions.getPostionsDoc(doc))
+            if mouvement.verifierCollisionDoc_Dalek():      # verifie si le dalek va sur le docteur
+                Matrix.gameOver = True
 
             # verifier s'il y a des collisions
+                
+           
+                    
             mouvement.verifierCollisionDalek_Dalek()
             mouvement.verifierCollisionDalek_Tf()
 
@@ -197,7 +204,7 @@ class Mouvement:
 
         daleks.positionOccupe.sort()
         daleks.positionOccupeAncienne.sort()
-        nbrDeDaleks =  len(daleks.positionOccupe) - 1   # - 1 car on regarde le dernier indice avec le i + 1 dans la condition du if
+        nbrDeDaleks = len(daleks.positionOccupe) - 1   # - 1 car on regarde le dernier indice avec le i + 1 dans la condition du if
         
         i = 0
         while i < nbrDeDaleks:
@@ -232,11 +239,18 @@ class Mouvement:
                     x+=1
                 
 
-        
 
     def verifierCollisionDoc_Dalek(self):
-        pass
-        # verifier les collisions entre les daleks et le docteur
+        nbrDeDaleks = len(daleks.positionOccupe)
+
+        x = 0
+        while x < nbrDeDaleks:
+            if daleks.positionOccupe[x] == doc.positionDocActuellle:
+                return True
+            x += 1   
+        return False
+            
+    # verifier les collisions entre les daleks et le docteur
 
     def verifierCollisionDoc_Tf(self, positionDocActuelle):
         for i in range(0, len(tf.positionTF)):
@@ -274,6 +288,8 @@ adj.afficherMatrix(matrix)
 
 print(positions.getPostionsDaleks())
 
-while True:
+while matrix.gameOver == False:
     mouvement.moveDoc(matrix, doc, adj)
+
+print('Game Over') # test
     

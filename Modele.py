@@ -18,6 +18,7 @@ class Docteur:
         
 class Matrix:
     
+    gameOver = False
     LONGUEUR = 11
     LARGEUR = 7
     array = list()
