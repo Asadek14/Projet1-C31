@@ -120,7 +120,6 @@ class Mouvement:
                 doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
                 success = True 
         
-        1
         if success == True:
             positions.setDocPosition(matrix, doc)
             os.system('cls')
@@ -132,7 +131,6 @@ class Mouvement:
             adj.afficherMatrix(matrix)
             # print(positions.getPostionsDoc(doc)) #
             # print(doc.positionDocActuellle)
-
             time.sleep(0.2)      
             
     def moveDalek(self, positionsDaleks, positionDoc):
