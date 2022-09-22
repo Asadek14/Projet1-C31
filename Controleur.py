@@ -1,11 +1,15 @@
+from inspect import ClassFoundException
 import os
 from turtle import position
+# from turtle import position
 import keyboard
 import time
 import subprocess
 
 from VueJeu import AireDeJeu 
-from Modele import Daleks, Docteur, Matrix
+from Modele import Daleks, Docteur, Matrix, TasDeFeraille
+
+
 
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
@@ -30,16 +34,26 @@ class Positions:
                 matrix.array[i] = Docteur.VALEUR_DOC
 
 
-    def setDalekPosition(self, matrix):
-        for x in range(0, 5):
+    def setDalekPosition(self, matrix): 
+        for x in range(0, len(Daleks.positionOccupe)):   
             matrix.array[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
-            matrix.array[Daleks.positionOccupeAncienne[x]] = 0
-            Daleks.positionOccupeAncienne[x] = Daleks.positionOccupe[x]
+            if daleks.positionOccupe[x] != 0:
+                if daleks.compteur != 1:
+                    matrix.array[Daleks.positionOccupeAncienne[x]] = 0
+                    Daleks.positionOccupeAncienne[x] = Daleks.positionOccupe[x]
+        daleks.compteur += 1
+
+
+    def setTfPosition(self, matrix):
+        for x in range(0, len(TasDeFeraille.positionTF)):      # on regarde toujours si il a des tas de feraille dans le tableau
+            if 0 == len(TasDeFeraille.positionTF):
+                break
+            matrix.array[TasDeFeraille.positionTF[x]] = TasDeFeraille.VALEUR_TF
             
     def getPostionsDaleks(self):
         
         positionsComparaison = []
-        for i in range(0, 5):
+        for i in range(0, len(Daleks.positionOccupe)):
             colomns = Daleks.positionOccupe[i]
             ranges = 0
             tab = []
@@ -68,6 +82,8 @@ class Positions:
         positionsComparaison.append(ranges)
         
         return positionsComparaison
+
+    
         
                 
     
@@ -120,48 +136,105 @@ class Mouvement:
                 doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
                 success = True 
         
+        
         if success == True:
             positions.setDocPosition(matrix, doc)
             os.system('cls')
             adj.afficherMatrix(matrix)
             time.sleep(1) 
             mouvement.moveDalek(positions.getPostionsDaleks(), positions.getPostionsDoc(doc))
-            positions.setDalekPosition(matrix)
+            # verifier s'il y a des collisions
+            mouvement.verifierCollisionDalek()
+            positions.setTfPosition(matrix)
+            positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
             os.system('cls')
             adj.afficherMatrix(matrix)
             # print(positions.getPostionsDoc(doc)) #
             # print(doc.positionDocActuellle)
             time.sleep(0.2)      
             
+            # cette methode est l'algorithme qui permet a chaque dalek de savoir dans quelle direction est le docteur
     def moveDalek(self, positionsDaleks, positionDoc):
-        for i in range(0, 5): # multiplie par niveau
+        for i in range(0, len(Daleks.positionOccupe)): # multiplie par niveau
             if positionsDaleks[i][0] == positionDoc[0]:
                 if positionsDaleks[i][1] > positionDoc[1]:
-                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR
+                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR     # en haut
                 else:
-                    Daleks.positionOccupe[i] += Matrix.LONGUEUR
+                    Daleks.positionOccupe[i] += Matrix.LONGUEUR     # en bas
                     
             elif positionsDaleks[i][1] == positionDoc[1]:
                 if positionsDaleks[i][0] > positionDoc[0]:
-                    Daleks.positionOccupe[i] -= 1
+                    Daleks.positionOccupe[i] -= 1                   # gauche
                 else:
-                    Daleks.positionOccupe[i] += 1
+                    Daleks.positionOccupe[i] += 1                   # droite
                     
             elif positionsDaleks[i][1] > positionDoc[1]:
                 if positionsDaleks[i][0] > positionDoc[0]:
-                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR + 1
+                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR + 1 # en haut a gauche
                 else:
-                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR - 1
+                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR - 1 # en haut a droite
                     
             elif positionsDaleks[i][1] < positionDoc[1]:
                 if positionsDaleks[i][0] > positionDoc[0]:
-                    Daleks.positionOccupe[i] += Matrix.LONGUEUR - 1
+                    Daleks.positionOccupe[i] += Matrix.LONGUEUR - 1 # en bas a gauche
                 else:
-                    Daleks.positionOccupe[i] += Matrix.LONGUEUR + 1
+                    Daleks.positionOccupe[i] += Matrix.LONGUEUR + 1 # en bas a droite
             
-            
+    def verifierCollisionDalek(self):
+
+        # verifier les collision entre les daleks et les daleks
+
+        daleks.positionOccupe.sort()
+        daleks.positionOccupeAncienne.sort()
+        nbrDeDaleks =  len(daleks.positionOccupe) - 1   # - 1 car on regarde le dernier indice avec le i + 1 dans la condition du if
+        
+        i = 0
+        while i < nbrDeDaleks:
+            if daleks.positionOccupe[i] == daleks.positionOccupe[i + 1]:
+                tf.positionTF.append(daleks.positionOccupe[i])
+                daleks.positionOccupe.remove(daleks.positionOccupe[i + 1])
+                daleks.positionOccupe.remove(daleks.positionOccupe[i])
+                matrix.array[Daleks.positionOccupeAncienne[i + 1]] = 0
+                matrix.array[Daleks.positionOccupeAncienne[i]] = 0
+                daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i + 1])
+                daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i])
+                nbrDeDaleks =  len(daleks.positionOccupe) - 1
+                i = 0
+            else:
+                i +=1
+
+        # verifier les collisions entre les daleks et les tas de ferailles
+
+        nbrDeTf = len(tf.positionTF)
+        nbrDeDaleks = len(daleks.positionOccupe)
+
+        for i in range(0, nbrDeTf):
+            x = 0
+            while x < nbrDeDaleks:
+                if daleks.positionOccupe[x] == tf.positionTF[i]:
+                    daleks.positionOccupe.remove(daleks.positionOccupe[x])
+                    matrix.array[Daleks.positionOccupeAncienne[x]] = 0
+                    daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[x])
+                    nbrDeDaleks = len(daleks.positionOccupe)
+                    x=0
+                else:
+                    x+=1
+                
+
+        
+
+    def verifierCollisionDoc(self):
+        pass
+        # verifier les collisions entre les daleks et le docteur
 
 
+
+
+
+
+
+    def placerTF(self, matrice):
+         tf.positionTF
 
 # Objets de Controleur
 mouvement = Mouvement()
@@ -171,14 +244,18 @@ positions = Positions()
 matrix = Matrix()
 doc = Docteur()
 daleks = Daleks()
+tf = TasDeFeraille()
 
 # Generer des positions aleatoires pour les daleks 
-daleks.genererDaleks()
+# daleks.genererDaleks()
 positions.setDalekPosition(matrix)
+
 
 
 # Objets de VueJeu
 adj = AireDeJeu()
+
+
 
 os.system('cls')
 adj.afficherMatrix(matrix)
@@ -187,3 +264,4 @@ print(positions.getPostionsDaleks())
 
 while True:
     mouvement.moveDoc(matrix, doc, adj)
+    
