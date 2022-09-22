@@ -1,5 +1,6 @@
 from inspect import ClassFoundException
 import os
+from turtle import position
 # from turtle import position
 import keyboard
 import time
@@ -7,6 +8,8 @@ import subprocess
 
 from VueJeu import AireDeJeu 
 from Modele import Daleks, Docteur, Matrix, TasDeFeraille
+
+
 
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
@@ -31,16 +34,26 @@ class Positions:
                 matrix.array[i] = Docteur.VALEUR_DOC
 
 
-    def setDalekPosition(self, matrix):
-        for x in range(0, 5):   # * niveau
+    def setDalekPosition(self, matrix): 
+        for x in range(0, len(Daleks.positionOccupe)):   
             matrix.array[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
-            matrix.array[Daleks.positionOccupeAncienne[x]] = 0
-            Daleks.positionOccupeAncienne[x] = Daleks.positionOccupe[x]
+            # if daleks.positionOccupe[x] != 0:
+            if daleks.compteur != 1:
+                matrix.array[Daleks.positionOccupeAncienne[x]] = 0
+                Daleks.positionOccupeAncienne[x] = Daleks.positionOccupe[x]
+        daleks.compteur += 1
+
+
+    def setTfPosition(self, matrix):
+        for x in range(0, len(TasDeFeraille.positionTF)):      # on regarde toujours si il a des tas de feraille dans le tableau
+            if 0 == len(TasDeFeraille.positionTF):
+                break
+            matrix.array[TasDeFeraille.positionTF[x]] = TasDeFeraille.VALEUR_TF
             
     def getPostionsDaleks(self):
         
         positionsComparaison = []
-        for i in range(0, 5):
+        for i in range(0, len(Daleks.positionOccupe)):
             colomns = Daleks.positionOccupe[i]
             ranges = 0
             tab = []
@@ -132,7 +145,8 @@ class Mouvement:
             mouvement.moveDalek(positions.getPostionsDaleks(), positions.getPostionsDoc(doc))
             # verifier s'il y a des collisions
             mouvement.verifierCollision()
-            positions.setDalekPosition(matrix)
+            positions.setTfPosition(matrix)
+            positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
             os.system('cls')
             adj.afficherMatrix(matrix)
             # print(positions.getPostionsDoc(doc)) #
@@ -142,7 +156,7 @@ class Mouvement:
             
             # cette methode est l'algorithme qui permet a chaque dalek de savoir dans quelle direction est le docteur
     def moveDalek(self, positionsDaleks, positionDoc):
-        for i in range(0, 5): # multiplie par niveau
+        for i in range(0, len(Daleks.positionOccupe)): # multiplie par niveau
             if positionsDaleks[i][0] == positionDoc[0]:
                 if positionsDaleks[i][1] > positionDoc[1]:
                     Daleks.positionOccupe[i] -= Matrix.LONGUEUR     # en haut
@@ -169,12 +183,17 @@ class Mouvement:
             
     def verifierCollision(self):
         daleks.positionOccupe.sort()
-        nbrDeDaleks = len(daleks.positionOccupe)
+        nbrDeDaleks = len(daleks.positionOccupe) - 1    # - 1 car on regarde le dernier indice avec le i + 1 dans la condition du if
 
         for i in range(0, nbrDeDaleks):
             if daleks.positionOccupe[i] == daleks.positionOccupe[i + 1]:
                 tf.positionTF.append(daleks.positionOccupe[i])
+                daleks.positionOccupe.remove(daleks.positionOccupe[i + 1])
                 daleks.positionOccupe.remove(daleks.positionOccupe[i])
+                break
+
+    def placerTF(self, matrice):
+         tf.positionTF
                 
         
     
@@ -191,7 +210,7 @@ daleks = Daleks()
 tf = TasDeFeraille()
 
 # Generer des positions aleatoires pour les daleks 
-daleks.genererDaleks()
+# daleks.genererDaleks()
 positions.setDalekPosition(matrix)
 
 

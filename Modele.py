@@ -7,7 +7,7 @@ from turtle import position
  # créer et initialiser le docteur
 class Docteur:
 
-    POSITION_DOC_INITIALE = 38
+    POSITION_DOC_INITIALE = 25
     VALEUR_DOC = 1
 
     def __init__(self):
@@ -39,37 +39,39 @@ class Matrix:
 class Daleks:
 
     VALEUR_DALEKS = 2
-    positionOccupe = []
-    positionOccupeAncienne = [0,0,0,0,0]    # est-ce utilisé?
+    positionOccupe = [1, 2, 44, 50, 7]
+    positionOccupeAncienne = [1, 2, 44, 50, 7]    # est-ce utilisé?
+    compteur = 1
 
     def __init__(self):
         pass
 
     # generateur de positions aléatoires pour les daleks
-    def genererDaleks(self):
+    # def genererDaleks(self):
 
-        i = 0
+    #     i = 0
 
-        while i < 5:      # 5 daleks * valeur du niveau
-            positionDalek = random.randint(0, (Matrix.LARGEUR * Matrix.LONGUEUR) - 1)
+    #     while i < 5:      # 5 daleks * valeur du niveau
+    #         positionDalek = random.randint(0, (Matrix.LARGEUR * Matrix.LONGUEUR) - 1)
 
-            # verifier si la position est la position initiale du docteur
-            if positionDalek == Docteur.POSITION_DOC_INITIALE:
-                continue
+    #         # verifier si la position est la position initiale du docteur
+    #         if positionDalek == Docteur.POSITION_DOC_INITIALE:
+    #             continue
 
-            # verifier si la position est deja occupee
-            existe = positionDalek in self.positionOccupe
-            if existe:
-                continue
+    #         # verifier si la position est deja occupee
+    #         existe = positionDalek in self.positionOccupe
+    #         if existe:
+    #             continue
 
-            self.positionOccupe.append(positionDalek)
-            # self.positionOccupeAncienne.append(positionDalek)
-            # Controleur.Postions.setDalekPosition(Controleur.matrix, Controleur.daleks)
-            print(self.positionOccupe[i])
-            i += 1
+    #         self.positionOccupe.append(positionDalek)
+    #         # self.positionOccupeAncienne.append(positionDalek)
+    #         # Controleur.Postions.setDalekPosition(Controleur.matrix, Controleur.daleks)
+    #         print(self.positionOccupe[i])
+    #         i += 1
 
 class TasDeFeraille:
 
+    VALEUR_TF = 3
     positionTF = []
 
     def __init__(self):
