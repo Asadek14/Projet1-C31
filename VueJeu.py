@@ -13,9 +13,11 @@ class AireDeJeu:
                     print('\033[0;37;40m\n')
 
             if matrix.array[i] == 1:
-                print('\033[0;37;44m  ', end = '\033[0;37;40m ')
+                print('\033[0;37;46m  ', end = '\033[0;37;40m ')
             elif matrix.array[i] == 2:
                 print('\033[0;37;41m  ', end = '\033[0;37;40m ')
+            elif matrix.array[i] == 3:
+                print('\033[0;37;43m  ', end = '\033[0;37;40m ')
             else:
                 print('\033[0;37;47m  ', end = '\033[0;37;40m ')
             
