@@ -23,13 +23,15 @@ class Teleporteur:
             for pOcc in daleks.positionOccupe:                  #for pour passer dans toutes les positions des daleks selon le niveau (5, 10, 15, etc)
                 if positionTP == pOcc:                          #si la position du TP est la meme que celle occupé par un dalek, refaire la generation position aléatoire
                     continue
-                else:
-                    try:
-                        if positionTP == pOcc-2 or pOcc+2 or pOcc-(matrix.LONGUEUR * 2) or pOcc+(matrix.LONGUEUR * 2) or pOcc+((matrix.LONGUEUR * 2) + 1) or pOcc+((matrix.LONGUEUR * 2) - 1 ) or pOcc-((matrix.LONGUEUR * 2) + 1) or pOcc-((matrix.LONGUEUR * 2) - 1 ):
-                            if positionTP is None:
+                else: 
+                    for pOcc in daleks.positionOccupe:     
+                        if positionTP == pOcc:  
+                            try:
+                                if positionTP == pOcc-2 or pOcc+2 or pOcc-(matrix.LONGUEUR * 2) or pOcc+(matrix.LONGUEUR * 2) or pOcc+((matrix.LONGUEUR * 2) + 1) or pOcc+((matrix.LONGUEUR * 2) - 1 ) or pOcc-((matrix.LONGUEUR * 2) + 1) or pOcc-((matrix.LONGUEUR * 2) - 1 ):
+                                    if positionTP is None:
+                                        continue
+                            except Exception:
                                 continue
-                    except Exception:
-                        continue
                 return positionTP
                     
     #methode pour teleportaton mode de jeu moyen        
@@ -301,7 +303,7 @@ class Mouvement:
 
 
 # Objets de Controleur
-mouvement = Mouvement("M")
+mouvement = Mouvement("F")
 positions = Positions()
 tp = Teleporteur()
 
