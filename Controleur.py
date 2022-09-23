@@ -1,5 +1,6 @@
 import os
 import keyboard
+import csv
 
 from VueJeu import AireDeJeu, VueMenu
 from Modele import Docteur, Matrix

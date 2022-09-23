@@ -28,4 +28,8 @@ class VueMenu:
         print("2 - Moyen\n")#  idem mais on ne vérifie pas la proximité de Daleks 
         print("3 - Difficile")#téléportage est complètement aléatoire et donc on peut atterrir sur un Dalek
         self.niveau = input("choix niveau: ")
-        
+
+
+ 
+
+

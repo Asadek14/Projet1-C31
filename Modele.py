@@ -53,3 +53,14 @@ class Daleks:
 
 class Zappeur:
     pass
+
+#enregistrer tous les points accumules par niveau
+#-------------------------------------------------
+#class EnregistrerPointage:
+
+#recuperer le nom du joueur qui est dans VueJeu
+#recuperer le niveau du joueur qui est dans VueJeu
+#recuperer les points gagne par le joueur
+
+#Une fois que j'ai les 3 infos, les écrire dans le fichier CSV
+
