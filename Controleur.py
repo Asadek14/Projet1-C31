@@ -12,26 +12,18 @@ from Modele import Daleks, Docteur, Matrix
 class Teleporteur:
     def __init__(self):
         pass
-#    def __init__(self, modeJeu):      
-#        self.modeJeu = modeJeu
-#
-#    def teleportation(self):
-#                if keyboard.is_pressed("T"): #si on appuie la touche T
-#                    if self.modeJeu == "F": # Facile
-#                        self.tpModeJeuF()
-#                    elif self.modeJeu == "M": # Moyen
-#                        self.tpModeJeuM()
-#                    elif self.modeJeu == "D": # Difficile
-#                        self.tpModeJeuD()
+
     #methode pour teleportation mode de jeu Facile            
     def tpModeJeuF(self):
         while True:
             positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
 
-            for i in daleks.positionOccupe[i]:#for pour passer dans toutes les positions des daleks selon le niveau (5, 10, 15, etc)
-                if positionTP == daleks.positionOccupe[i]:#si la position du TP est la meme que celle occupé par un dalek, refaire la generation position aléatoire
+            for pOcc in daleks.positionOccupe:#for pour passer dans toutes les positions des daleks selon le niveau (5, 10, 15, etc)
+                if positionTP == daleks.positionOccupe:#si la position du TP est la meme que celle occupé par un dalek, refaire la generation position aléatoire
                     continue
-                elif positionTP == daleks.positionOccupe[i-2]:#si la position est a une distance d'au moins deux cases, retourner la position
+                elif positionTP != daleks.positionOccupe[-2] or daleks.positionOccupe[+2] or daleks.positionOccupe[-(matrix.LONGUEUR * 2)] or daleks.positionOccupe[+(matrix.LONGUEUR * 2)] :#si la position est a une distance d'au moins deux cases, retourner la position
+                    continue
+                else:
                     return positionTP
             break
     #methode pour teleportaton mode de jeu moyen        
@@ -39,12 +31,12 @@ class Teleporteur:
         while True:
             positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1)
 
-            for i in daleks.positionOccupe[i]:
-                if positionTP == daleks.positionOccupe[i]:
+            for pOcc in daleks.positionOccupe:
+                if positionTP == pOcc:
                     continue
                 else:
                     return positionTP
-            break
+        #break
     #methode pour teleportation mode de jeu difficile        
     def tpModeJeuD(self):
         positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1)
@@ -124,9 +116,9 @@ class Mouvement:
                     if self.modeJeu == "F": # Facile
                         doc.positionDocActuellle = tp.tpModeJeuF(); success = True
                     elif self.modeJeu == "M": # Moyen
-                        tp.tpModeJeuM(); success = True
+                        doc.positionDocActuellle = tp.tpModeJeuM(); success = True
                     elif self.modeJeu == "D": # Difficile
-                        tp.tpModeJeuD(); success = True
+                        doc.positionDocActuellle = tp.tpModeJeuD(); success = True
                         
         if keyboard.is_pressed("left arrow"):
             if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
@@ -206,7 +198,7 @@ class Mouvement:
 
 
 # Objets de Controleur
-mouvement = Mouvement("D")
+mouvement = Mouvement("F")
 positions = Positions()
 tp = Teleporteur()
 
