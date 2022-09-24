@@ -1,3 +1,4 @@
+from importlib.resources import path
 from inspect import ClassFoundException
 import os
 from turtle import position
@@ -5,9 +6,9 @@ from turtle import position
 import keyboard
 import time
 import subprocess
-
-from VueJeu import AireDeJeu 
-from Modele import Daleks, Docteur, Matrix, TasDeFeraille
+import csv
+from VueJeu import AireDeJeu,VueMenu 
+from Modele import Daleks, Docteur, Matrix, Pointage, TasDeFeraille
 
 
 
@@ -96,6 +97,7 @@ class Mouvement:
     def moveDoc(self, matrix, doc, adj):
         
         success = False
+        
         if keyboard.is_pressed("left arrow"):
             if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
@@ -157,11 +159,12 @@ class Mouvement:
                 Matrix.gameOver = True
 
             # verifier s'il y a des collisions
-                
-           
-                    
-            mouvement.verifierCollisionDalek_Dalek()
-            mouvement.verifierCollisionDalek_Tf()
+                      
+            # mouvement.verifierCollisionDalek_Dalek()#si == True -> nbr points cosmique += 5
+            # mouvement.verifierCollisionDalek_Tf()#si == True -> nbr points cosmique += 5
+            
+
+            
 
             positions.setTfPosition(matrix)
             positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
@@ -201,7 +204,7 @@ class Mouvement:
     def verifierCollisionDalek_Dalek(self):
 
         # verifier les collision entre les daleks et les daleks
-
+        
         daleks.positionOccupe.sort()
         daleks.positionOccupeAncienne.sort()
         nbrDeDaleks = len(daleks.positionOccupe) - 1   # - 1 car on regarde le dernier indice avec le i + 1 dans la condition du if
@@ -218,6 +221,8 @@ class Mouvement:
                 daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i])
                 nbrDeDaleks =  len(daleks.positionOccupe) - 1
                 i = 0
+                #point.nbrPointsCosmique += point.POINT_VALEUR *2
+                
             else:
                 i +=1
 
@@ -235,6 +240,7 @@ class Mouvement:
                     daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[x])
                     nbrDeDaleks = len(daleks.positionOccupe)
                     x=0
+                    #point.nbrPointsCosmique += point.POINT_VALEUR
                 else:
                     x+=1
                 
@@ -259,7 +265,7 @@ class Mouvement:
         return True
 
 
-
+    
 
 # Objets de Controleur
 mouvement = Mouvement()
@@ -270,6 +276,7 @@ matrix = Matrix()
 doc = Docteur()
 daleks = Daleks()
 tf = TasDeFeraille()
+point = Pointage()
 
 # Generer des positions aleatoires pour les daleks 
 # daleks.genererDaleks()
@@ -278,9 +285,22 @@ positions.setTfPosition(matrix)
 
 
 
+
 # Objets de VueJeu
 adj = AireDeJeu()
-
+menu = VueMenu()
+menu.afficherMenu()
+#Teleportage si utilisateur veut l'utiliser:
+#a utiliser avec la classe teleporteur
+if menu.niveau == '1':#facile
+    print("facile")
+    #transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
+elif menu.niveau == '2':#normal
+    print("normale")
+    #  idem mais on ne vérifie pas la proximité de Daleks 
+elif menu.niveau == '3':#difficile
+    print("difficile")
+    #téléportage est complètement aléatoire et donc on peut atterrir sur un Daleks
 
 
 os.system('cls')
@@ -292,4 +312,29 @@ while matrix.gameOver == False:
     mouvement.moveDoc(matrix, doc, adj)
 
 print('Game Over') # test
+
+#une fois la partie termine inscrit nom + score dans le fichier
+if matrix.gameOver:
+    #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
+    nomJoueur = menu.nom
+    score = point.nbrPointsCosmique
+    
+    data =[('Prenom','Point'),(nomJoueur,score)]
+# Ouvrir le fichier en mode écriture
+    fichier = open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'w')
+# Créer l'objet fichier
+    obj = csv.writer(fichier)
+# Chaque élément de data correspond à une ligne
+    for element in data:
+        obj.writerow(element)
+    fichier.close()
+
+#lire info
+#lire les infos dans le fichier csv
+with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
+    # Créer un objet csv à partir du fichier
+    obj = csv.reader(f)
+
+    for ligne in obj:
+        print(ligne)
     

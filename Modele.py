@@ -89,3 +89,12 @@ class TasDeFeraille:
 
     def __init__(self):
         pass
+
+
+class Pointage:
+    nbrPointsCosmique = 0
+    POINT_VALEUR = 5
+    def __init__(self):
+        pass
+
+ 
