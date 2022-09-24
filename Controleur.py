@@ -10,13 +10,21 @@ import subprocess
 from VueJeu import AireDeJeu 
 from Modele import Daleks, Docteur, Matrix, TasDeFeraille
 
+class Zappeur:
+    def __init__(self):
+        pass
+    
+    def zappeur(self, doc):
+        if doc.nbZappeur != 0:
+            
+            pass
 
 class Teleporteur:
     def __init__(self):
         pass
 
     #methode pour teleportation mode de jeu Facile            
-    def tpModeJeuF(self):
+    def tpModeJeuF(self, matrix, daleks):
         while True:
             positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
 
@@ -35,7 +43,7 @@ class Teleporteur:
                 return positionTP
                     
     #methode pour teleportaton mode de jeu moyen        
-    def tpModeJeuM(self):
+    def tpModeJeuM(self, matrix, daleks):
         while True:
             positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1)
 
@@ -44,6 +52,10 @@ class Teleporteur:
                     continue
                 else:
                     return positionTP
+    
+    def tpModeJeuD(self, matrix):
+        positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1)
+        return positionTP
 
 # Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
 class Positions: 
@@ -131,11 +143,11 @@ class Mouvement:
         
         if keyboard.is_pressed("T"): #si on appuie la touche T
                     if self.modeJeu == "F": # Facile
-                        doc.positionDocActuellle = tp.tpModeJeuF(); success = True
+                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
                     elif self.modeJeu == "M": # Moyen
-                        doc.positionDocActuellle = tp.tpModeJeuM(); success = True
+                        doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
                     elif self.modeJeu == "D": # Difficile
-                        doc.positionDocActuellle = tp.tpModeJeuD(); success = True
+                        doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
                 
         if keyboard.is_pressed("left arrow"):
             if doc.positionDocActuellle % Matrix.LONGUEUR != 0:

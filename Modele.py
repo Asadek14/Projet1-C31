@@ -6,7 +6,7 @@ from turtle import position
 
  # créer et initialiser le docteur
 class Docteur:
-
+    nbZappeur = 1
     POSITION_DOC_INITIALE = 24
     VALEUR_DOC = 1
 
