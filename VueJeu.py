@@ -1,4 +1,4 @@
-from Modele import Matrix
+from Modele import Daleks, Matrix
 import csv
 import os
 

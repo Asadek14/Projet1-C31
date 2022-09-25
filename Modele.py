@@ -14,6 +14,10 @@ class Docteur:
     def __init__(self):
         self.positionDocActuellle = self.POSITION_DOC_INITIALE
         self.positionDocAncienne = self.positionDocActuellle
+
+    def initialiserTout(self):
+        self.positionDocActuellle = 24
+        self.positionDocAncienne = self.positionDocActuellle
       
         
         
@@ -35,6 +39,16 @@ class Matrix:
                 self.array.append(0)
             else:
                 self.array.append(Docteur.VALEUR_DOC)
+
+    def initialiserTout(self):
+        self.gameOver = False
+        self.array.clear()
+        for i in range(0, self.LONGUEUR * self.LARGEUR):
+            if i != Docteur.POSITION_DOC_INITIALE:
+                self.array.append(0)
+            else:
+                self.array.append(Docteur.VALEUR_DOC)
+
                 
                 
                 
@@ -82,6 +96,16 @@ class Daleks:
     def __init__(self):
         pass
 
+    def initialiserTout(self):
+
+        self.positionOccupe.clear()
+        self.positionOccupeAncienne.clear()
+
+        self.positionOccupe = [1, 2, 3, 56, 58]
+        self.positionOccupeAncienne = [1, 2, 3, 56, 58]    # est-ce utilisé?
+        self.compteur = 1
+
+
 
 class TasDeFeraille:
 
@@ -91,12 +115,18 @@ class TasDeFeraille:
     def __init__(self):
         pass
 
+    def initialiserTout(self):
+        self.positionTF.clear()
+
 
 class Pointage:
     nbrPointsCosmique = 0
     POINT_VALEUR = 5
     def __init__(self):
         pass
+
+    def initialiserTout(self):
+        self.nbrPointsCosmique = 0
 
  
 # class AfficherScore:

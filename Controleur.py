@@ -14,7 +14,7 @@ from Modele import Daleks, Docteur, Matrix, TasDeFeraille, Pointage
 
 
 
-# Cette classe va s'occuper de setter les postions de Docteur/Daleks/TasDeFerailles recu par la classe Mouvement
+# Cette classe va s'occuper de setter les postions de Docteur/daleks/TasDeFerailles recu par la classe Mouvement
 class Positions: 
     
 
@@ -37,12 +37,12 @@ class Positions:
 
 
     def setDalekPosition(self, matrix): 
-        for x in range(0, len(Daleks.positionOccupe)):   
-            matrix.array[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
+        for x in range(0, len(daleks.positionOccupe)):   
+            matrix.array[daleks.positionOccupe[x]] = daleks.VALEUR_DALEKS
             if daleks.positionOccupe[x] != 0:
                 if daleks.compteur != 1:
-                    matrix.array[Daleks.positionOccupeAncienne[x]] = 0
-                    Daleks.positionOccupeAncienne[x] = Daleks.positionOccupe[x]
+                    matrix.array[daleks.positionOccupeAncienne[x]] = 0
+                    daleks.positionOccupeAncienne[x] = daleks.positionOccupe[x]
         daleks.compteur += 1
 
 
@@ -52,16 +52,16 @@ class Positions:
                 break
             matrix.array[TasDeFeraille.positionTF[x]] = TasDeFeraille.VALEUR_TF
             
-    def getPostionsDaleks(self):
+    def getPostionsDaleks(self, daleks):
         
         positionsComparaison = []
-        for i in range(0, len(Daleks.positionOccupe)):
-            colomns = Daleks.positionOccupe[i]
+        for i in range(0, len(daleks.positionOccupe)):
+            colomns = daleks.positionOccupe[i]
             ranges = 0
             tab = []
             
-            while colomns >= Matrix.LONGUEUR:
-                colomns -= Matrix.LONGUEUR
+            while colomns >= matrix.LONGUEUR:
+                colomns -= matrix.LONGUEUR
                 ranges += 1
         
             tab.append(colomns)
@@ -76,8 +76,8 @@ class Positions:
         ranges = 0
         positionsComparaison = []
         
-        while colomns >= Matrix.LONGUEUR:
-            colomns -= Matrix.LONGUEUR
+        while colomns >= matrix.LONGUEUR:
+            colomns -= matrix.LONGUEUR
             ranges += 1
     
         positionsComparaison.append(colomns)
@@ -89,7 +89,7 @@ class Positions:
         
                 
     
-# Cette classe va s'occuper de bouger les characteres de jeu (Docteur/Daleks/TasDeFerailles) dans la matrice si les conditions sont valides
+# Cette classe va s'occuper de bouger les characteres de jeu (Docteur/daleks/TasDeFerailles) dans la matrice si les conditions sont valides
 class Mouvement:
     
     def __init__(self):
@@ -100,51 +100,51 @@ class Mouvement:
         success = False
         
         if keyboard.is_pressed("left arrow"):
-            if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
+            if doc.positionDocActuellle % matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
                     doc.positionDocActuellle -= 1 
                     success = True         
         
         elif keyboard.is_pressed("right arrow"):
-            if doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
+            if doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
                     doc.positionDocActuellle += 1
                     success = True   
                 
         elif keyboard.is_pressed("up arrow"):
-            if doc.positionDocActuellle - Matrix.LONGUEUR >= 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - Matrix.LONGUEUR):
-                    doc.positionDocActuellle -= Matrix.LONGUEUR 
+            if doc.positionDocActuellle - matrix.LONGUEUR >= 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - matrix.LONGUEUR):
+                    doc.positionDocActuellle -= matrix.LONGUEUR 
                     success = True       
                 
         elif keyboard.is_pressed("down arrow"):
-            if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + Matrix.LONGUEUR):
-                    doc.positionDocActuellle += Matrix.LONGUEUR
+            if doc.positionDocActuellle + matrix.LONGUEUR <= (matrix.LONGUEUR * matrix.LARGEUR) - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + matrix.LONGUEUR):
+                    doc.positionDocActuellle += matrix.LONGUEUR
                     success = True  
 
         elif keyboard.is_pressed("Home"):
-            if (doc.positionDocActuellle - Matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (Matrix.LONGUEUR + 1)):
-                    doc.positionDocActuellle -=  Matrix.LONGUEUR + 1
+            if (doc.positionDocActuellle - matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR + 1)):
+                    doc.positionDocActuellle -=  matrix.LONGUEUR + 1
                     success = True  
 
         elif keyboard.is_pressed("Page_Up"):
-            if (doc.positionDocActuellle - Matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (Matrix.LONGUEUR - 1)):
-                    doc.positionDocActuellle -=  Matrix.LONGUEUR - 1
+            if (doc.positionDocActuellle - matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR - 1)):
+                    doc.positionDocActuellle -=  matrix.LONGUEUR - 1
                     success = True 
 
         elif keyboard.is_pressed("End"):
-            if (doc.positionDocActuellle + Matrix.LONGUEUR) - 1 <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (Matrix.LONGUEUR - 1)):
-                    doc.positionDocActuellle +=  Matrix.LONGUEUR - 1
+            if (doc.positionDocActuellle + matrix.LONGUEUR) - 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR - 1)):
+                    doc.positionDocActuellle +=  matrix.LONGUEUR - 1
                     success = True 
 
         elif keyboard.is_pressed("Page_Down"):
-            if (doc.positionDocActuellle + Matrix.LONGUEUR) + 1 <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1 and doc.positionDocActuellle % Matrix.LONGUEUR != Matrix.LONGUEUR - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (Matrix.LONGUEUR + 1)):
-                    doc.positionDocActuellle +=  Matrix.LONGUEUR + 1
+            if (doc.positionDocActuellle + matrix.LONGUEUR) + 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR + 1)):
+                    doc.positionDocActuellle +=  matrix.LONGUEUR + 1
                     success = True 
         
         
@@ -153,15 +153,15 @@ class Mouvement:
             os.system('cls')
             adj.afficherMatrix(matrix)
             time.sleep(1) 
-            if mouvement.verifierCollisionDoc_Dalek():      # verifie si le docteur va sur le dalek
-                Matrix.gameOver = True
-            mouvement.moveDalek(positions.getPostionsDaleks(), positions.getPostionsDoc(doc))
-            if mouvement.verifierCollisionDoc_Dalek():      # verifie si le dalek va sur le docteur
-                Matrix.gameOver = True
+            if mouvement.verifierCollisionDoc_Dalek(daleks):      # verifie si le docteur va sur le dalek
+                matrix.gameOver = True
+            mouvement.moveDalek(positions.getPostionsDaleks(daleks), positions.getPostionsDoc(doc))
+            if mouvement.verifierCollisionDoc_Dalek(daleks):      # verifie si le dalek va sur le docteur
+                matrix.gameOver = True
 
             #verifier si il y a des collisions
-            mouvement.verifierCollisionDalek_Dalek()
-            mouvement.verifierCollisionDalek_Tf()
+            mouvement.verifierCollisionDalek_Dalek(daleks)
+            mouvement.verifierCollisionDalek_Tf(daleks)
             
             positions.setTfPosition(matrix)
             positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
@@ -173,32 +173,32 @@ class Mouvement:
             
             # cette methode est l'algorithme qui permet a chaque dalek de savoir dans quelle direction est le docteur
     def moveDalek(self, positionsDaleks, positionDoc):
-        for i in range(0, len(Daleks.positionOccupe)): # multiplie par niveau
+        for i in range(0, len(daleks.positionOccupe)): # multiplie par niveau
             if positionsDaleks[i][0] == positionDoc[0]:
                 if positionsDaleks[i][1] > positionDoc[1]:
-                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR     # en haut
+                    daleks.positionOccupe[i] -= matrix.LONGUEUR     # en haut
                 else:
-                    Daleks.positionOccupe[i] += Matrix.LONGUEUR     # en bas
+                    daleks.positionOccupe[i] += matrix.LONGUEUR     # en bas
                     
             elif positionsDaleks[i][1] == positionDoc[1]:
                 if positionsDaleks[i][0] > positionDoc[0]:
-                    Daleks.positionOccupe[i] -= 1                   # gauche
+                    daleks.positionOccupe[i] -= 1                   # gauche
                 else:
-                    Daleks.positionOccupe[i] += 1                   # droite
+                    daleks.positionOccupe[i] += 1                   # droite
                     
             elif positionsDaleks[i][1] > positionDoc[1]:
                 if positionsDaleks[i][0] > positionDoc[0]:
-                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR + 1 # en haut a gauche
+                    daleks.positionOccupe[i] -= matrix.LONGUEUR + 1 # en haut a gauche
                 else:
-                    Daleks.positionOccupe[i] -= Matrix.LONGUEUR - 1 # en haut a droite
+                    daleks.positionOccupe[i] -= matrix.LONGUEUR - 1 # en haut a droite
                     
             elif positionsDaleks[i][1] < positionDoc[1]:
                 if positionsDaleks[i][0] > positionDoc[0]:
-                    Daleks.positionOccupe[i] += Matrix.LONGUEUR - 1 # en bas a gauche
+                    daleks.positionOccupe[i] += matrix.LONGUEUR - 1 # en bas a gauche
                 else:
-                    Daleks.positionOccupe[i] += Matrix.LONGUEUR + 1 # en bas a droite
+                    daleks.positionOccupe[i] += matrix.LONGUEUR + 1 # en bas a droite
             
-    def verifierCollisionDalek_Dalek(self):
+    def verifierCollisionDalek_Dalek(self, daleks):
 
         # verifier les collision entre les daleks et les daleks
         
@@ -212,8 +212,8 @@ class Mouvement:
                 tf.positionTF.append(daleks.positionOccupe[i])
                 daleks.positionOccupe.remove(daleks.positionOccupe[i + 1])
                 daleks.positionOccupe.remove(daleks.positionOccupe[i])
-                matrix.array[Daleks.positionOccupeAncienne[i + 1]] = 0
-                matrix.array[Daleks.positionOccupeAncienne[i]] = 0
+                matrix.array[daleks.positionOccupeAncienne[i + 1]] = 0
+                matrix.array[daleks.positionOccupeAncienne[i]] = 0
                 daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i + 1])
                 daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i])
                 nbrDeDaleks =  len(daleks.positionOccupe) - 1
@@ -224,7 +224,7 @@ class Mouvement:
             else:
                 i +=1
 
-    def verifierCollisionDalek_Tf(self):
+    def verifierCollisionDalek_Tf(self, daleks):
 
         nbrDeTf = len(tf.positionTF)
         nbrDeDaleks = len(daleks.positionOccupe)
@@ -234,7 +234,7 @@ class Mouvement:
             while x < nbrDeDaleks:
                 if daleks.positionOccupe[x] == tf.positionTF[i]:
                     daleks.positionOccupe.remove(daleks.positionOccupe[x])
-                    matrix.array[Daleks.positionOccupeAncienne[x]] = 0
+                    matrix.array[daleks.positionOccupeAncienne[x]] = 0
                     daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[x])
                     nbrDeDaleks = len(daleks.positionOccupe)
                     x=0
@@ -245,7 +245,7 @@ class Mouvement:
                 
 
 
-    def verifierCollisionDoc_Dalek(self):
+    def verifierCollisionDoc_Dalek(self, daleks):
         nbrDeDaleks = len(daleks.positionOccupe)
 
         x = 0
@@ -296,7 +296,10 @@ allerMenu = ''
 #si voir score: afficher liste trié
 #si perd -> affiche score puis proposer rejouer ou quitter
 
+
+
 menu.afficherMenu()
+
 
 #Teleportage si utilisateur veut l'utiliser:
 #a utiliser avec la classe teleporteur
@@ -304,21 +307,28 @@ menu.afficherMenu()
 while sortie != 'y':
     if menu.choix == '1':
 
+        matrix.initialiserTout()
+        doc.initialiserTout()
+        daleks.initialiserTout()
+        point.initialiserTout()
+        tf.initialiserTout()
+        positions.setDalekPosition(matrix)
+        positions.setTfPosition(matrix)
         menu.demanderNomEtNiveau()
         if menu.niveau == '1':#facile
             print("facile")
-            #transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
+            #transporte docteur sur une case vide  ayant au moins deux cases de distance des daleks le plus proche
         elif menu.niveau == '2':#normal
             print("normale")
-            #  idem mais on ne vérifie pas la proximité de Daleks 
+            #  idem mais on ne vérifie pas la proximité de daleks 
         elif menu.niveau == '3':#difficile
             print("difficile")
-            #téléportage est complètement aléatoire et donc on peut atterrir sur un Daleks
+            #téléportage est complètement aléatoire et donc on peut atterrir sur un daleks
 
         os.system('cls')
         adj.afficherMatrix(matrix)
 
-        print(positions.getPostionsDaleks())
+        print(positions.getPostionsDaleks(daleks))
 
         while matrix.gameOver == False:
             mouvement.moveDoc(matrix, doc, adj)
@@ -328,25 +338,24 @@ while sortie != 'y':
         #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
             nomJoueur = menu.nom
             data =[('Prenom','Point'),(nomJoueur,point.nbrPointsCosmique)]
-            fichier = open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'w')
+            fichier = open("liste.csv",'w')
             obj = csv.writer(fichier)
             for element in data:
                 obj.writerow(element)
             fichier.close()
 
         #puis afficher les score
-            with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
+            with open("liste.csv",'r') as f:
                     obj = csv.reader(f)
                     for ligne in obj:
                         print(ligne)
            
-            allerMenu = input("Appuyez sur y pour revenir au menu")
-            if allerMenu == 'y':
-                menu.afficherMenu()
+            allerMenu = input("Appuyez sur n'importe quel button pour revenir au menu")
+            menu.afficherMenu()
 
     elif menu.choix == '2':
                 #affiche fichier.csv
-                with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
+                with open("liste.csv",'r') as f:
                 # Créer un objet csv à partir du fichier
                     obj = csv.reader(f)
                     for ligne in obj:
