@@ -22,25 +22,51 @@ class Zappeur:
 class Teleporteur:
     def __init__(self):
         pass
-
+        #if 
     #methode pour teleportation mode de jeu Facile            
-    def tpModeJeuF(self, matrix, daleks):
-        while True:
-            positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
-
-            for pOcc in daleks.positionOccupe:                  #for pour passer dans toutes les positions des daleks selon le niveau (5, 10, 15, etc)
-                if positionTP == pOcc:                          #si la position du TP est la meme que celle occupé par un dalek, refaire la generation position aléatoire
-                    continue
-                else: 
-                    for pOcc in daleks.positionOccupe:     
-                        if positionTP == pOcc:  
-                            try:
-                                if positionTP == pOcc-2 or pOcc+2 or pOcc-(matrix.LONGUEUR * 2) or pOcc+(matrix.LONGUEUR * 2) or pOcc+((matrix.LONGUEUR * 2) + 1) or pOcc+((matrix.LONGUEUR * 2) - 1 ) or pOcc-((matrix.LONGUEUR * 2) + 1) or pOcc-((matrix.LONGUEUR * 2) - 1 ):
-                                    if positionTP is None:
-                                        continue
-                            except Exception:
-                                continue
-                return positionTP
+    def tpModeJeuF(self, matrix, daleks, tf):
+        
+        condition = False
+        i = 0
+        positionTP = 0
+        
+        while i < len(daleks.positionOccupe):
+            
+            if condition == False:
+                x = 0
+                positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
+                
+                # while x < len(tf.positionTF) :
+                #     if positionTP == tf.positionTF[x]: 
+                #         positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) 
+                #         i = -1; condition = False; continue
+                        
+                condition = True
+            
+            if positionTP == daleks.positionOccupe[i]:                                          #si la position du TP est la meme que celle d'un 
+                i = -1; condition = False; continue
+            elif positionTP >= daleks.positionOccupe[i] - 2 and positionTP <= daleks.positionOccupe[i] + 2:                       #ne peut ni aller ni a droite ni a gauche
+                i = -1; condition = False; continue
+            elif positionTP == daleks.positionOccupe[i] - matrix.LONGUEUR or positionTP == daleks.positionOccupe[i] - matrix.LONGUEUR * 2: #haut
+                i = -1; condition = False; continue
+            elif positionTP == daleks.positionOccupe[i] + matrix.LONGUEUR or positionTP == daleks.positionOccupe[i] + matrix.LONGUEUR * 2: #bas
+                i = -1; condition = False; continue
+            elif positionTP == daleks.positionOccupe[i] - (matrix.LONGUEUR + 1) or positionTP == daleks.positionOccupe[i] - (matrix.LONGUEUR + 1) * 2: #haut gauche
+                i = -1; condition = False; continue
+            elif positionTP == daleks.positionOccupe[i] - (matrix.LONGUEUR - 1) or positionTP == daleks.positionOccupe[i] - (matrix.LONGUEUR - 1) * 2: #haut droite
+                i = -1; condition = False; continue
+            elif positionTP == daleks.positionOccupe[i] + (matrix.LONGUEUR - 1) or positionTP == daleks.positionOccupe[i] + (matrix.LONGUEUR - 1) * 2: #bas gauche
+                i = -1; condition = False; continue
+            elif positionTP == daleks.positionOccupe[i] + (matrix.LONGUEUR + 1) or positionTP == daleks.positionOccupe[i] + (matrix.LONGUEUR + 1) * 2: #bas droite
+                i = -1; condition = False; continue
+            else:
+                i+=1
+                
+        return positionTP            
+                
+                
+            
+        #return positionTP
                     
     #methode pour teleportaton mode de jeu moyen        
     def tpModeJeuM(self, matrix, daleks):
@@ -141,15 +167,15 @@ class Mouvement:
     def moveDoc(self, matrix, doc, adj):
         success = False
         
-        if keyboard.is_pressed("T"): #si on appuie la touche T
+        if keyboard.is_pressed("T"):
                     if self.modeJeu == "F": # Facile
-                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
+                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks, tf); success = True
                     elif self.modeJeu == "M": # Moyen
                         doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
                     elif self.modeJeu == "D": # Difficile
                         doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
                 
-        if keyboard.is_pressed("left arrow"):
+        if keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
                     doc.positionDocActuellle -= 1 
