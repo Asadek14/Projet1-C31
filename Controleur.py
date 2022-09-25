@@ -34,7 +34,7 @@ class Teleporteur:
             
             if condition == False:
                 x = 0
-                positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
+                positionTP = 7 #random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
                 
                 # while x < len(tf.positionTF) :
                 #     if positionTP == tf.positionTF[x]: 
@@ -106,12 +106,32 @@ class Positions:
 
 
     def setDalekPosition(self, matrix): 
-        for x in range(0, len(Daleks.positionOccupe)):   
-            matrix.array[Daleks.positionOccupe[x]] = Daleks.VALEUR_DALEKS
+        for x in range(0, len(daleks.positionOccupe)):   
+            matrix.array[daleks.positionOccupe[x]] = daleks.VALEUR_DALEKS
             if daleks.positionOccupe[x] != 0:
                 if daleks.compteur != 1:
-                    matrix.array[Daleks.positionOccupeAncienne[x]] = 0
-                    Daleks.positionOccupeAncienne[x] = Daleks.positionOccupe[x]
+                    i = x
+                    j = x
+                    cond1 = True
+                    cond2 = True
+                    
+                    while i > 0:
+                        i -=1
+                        if daleks.positionOccupe[i] == matrix.array[daleks.positionOccupeAncienne[x]]:
+                            cond1 = False
+                            break
+                            
+
+                    while j <= len(daleks.positionOccupe):
+                        j +=1
+                        if daleks.positionOccupe[i] == matrix.array[daleks.positionOccupeAncienne[x]]:
+                            cond2 = False
+                            break
+                            
+
+                    if cond1 and cond2:
+                        matrix.array[daleks.positionOccupeAncienne[x]] = 0
+                    daleks.positionOccupeAncienne[x] = daleks.positionOccupe[x]
         daleks.compteur += 1
 
 
@@ -175,7 +195,7 @@ class Mouvement:
                     elif self.modeJeu == "D": # Difficile
                         doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
                 
-        if keyboard.is_pressed("left arrow"): 
+        elif keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % Matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
                     doc.positionDocActuellle -= 1 
