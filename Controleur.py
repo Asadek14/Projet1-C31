@@ -2,13 +2,14 @@ from importlib.resources import path
 from inspect import ClassFoundException
 import os
 from turtle import position
+from unittest.util import sorted_list_difference
 # from turtle import position
 import keyboard
 import time
 import subprocess
 import csv
 from VueJeu import AireDeJeu,VueMenu 
-from Modele import Daleks, Docteur, Matrix, Pointage, TasDeFeraille
+from Modele import Daleks, Docteur, Matrix, TasDeFeraille, Pointage
 
 
 
@@ -158,14 +159,10 @@ class Mouvement:
             if mouvement.verifierCollisionDoc_Dalek():      # verifie si le dalek va sur le docteur
                 Matrix.gameOver = True
 
-            # verifier s'il y a des collisions
-                      
-            # mouvement.verifierCollisionDalek_Dalek()#si == True -> nbr points cosmique += 5
-            # mouvement.verifierCollisionDalek_Tf()#si == True -> nbr points cosmique += 5
+            #verifier si il y a des collisions
+            mouvement.verifierCollisionDalek_Dalek()
+            mouvement.verifierCollisionDalek_Tf()
             
-
-            
-
             positions.setTfPosition(matrix)
             positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
             os.system('cls')
@@ -220,8 +217,9 @@ class Mouvement:
                 daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i + 1])
                 daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[i])
                 nbrDeDaleks =  len(daleks.positionOccupe) - 1
+                point.nbrPointsCosmique += point.POINT_VALEUR * 2
+
                 i = 0
-                #point.nbrPointsCosmique += point.POINT_VALEUR *2
                 
             else:
                 i +=1
@@ -240,7 +238,8 @@ class Mouvement:
                     daleks.positionOccupeAncienne.remove(daleks.positionOccupeAncienne[x])
                     nbrDeDaleks = len(daleks.positionOccupe)
                     x=0
-                    #point.nbrPointsCosmique += point.POINT_VALEUR
+                    point.nbrPointsCosmique += point.POINT_VALEUR
+                    
                 else:
                     x+=1
                 
@@ -278,6 +277,7 @@ daleks = Daleks()
 tf = TasDeFeraille()
 point = Pointage()
 
+
 # Generer des positions aleatoires pour les daleks 
 # daleks.genererDaleks()
 positions.setDalekPosition(matrix)
@@ -289,52 +289,90 @@ positions.setTfPosition(matrix)
 # Objets de VueJeu
 adj = AireDeJeu()
 menu = VueMenu()
+sortie = 'n'
+allerMenu = ''
+#afficher le menu avec le choix: Soit jouer ou voir score
+#si jouer: entre nom ect...
+#si voir score: afficher liste trié
+#si perd -> affiche score puis proposer rejouer ou quitter
+
 menu.afficherMenu()
+
 #Teleportage si utilisateur veut l'utiliser:
 #a utiliser avec la classe teleporteur
-if menu.niveau == '1':#facile
-    print("facile")
-    #transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
-elif menu.niveau == '2':#normal
-    print("normale")
-    #  idem mais on ne vérifie pas la proximité de Daleks 
-elif menu.niveau == '3':#difficile
-    print("difficile")
-    #téléportage est complètement aléatoire et donc on peut atterrir sur un Daleks
+#Si il a fait le choix de jouer
+while sortie != 'y':
+    if menu.choix == '1':
+
+        menu.demanderNomEtNiveau()
+        if menu.niveau == '1':#facile
+            print("facile")
+            #transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
+        elif menu.niveau == '2':#normal
+            print("normale")
+            #  idem mais on ne vérifie pas la proximité de Daleks 
+        elif menu.niveau == '3':#difficile
+            print("difficile")
+            #téléportage est complètement aléatoire et donc on peut atterrir sur un Daleks
+
+        os.system('cls')
+        adj.afficherMatrix(matrix)
+
+        print(positions.getPostionsDaleks())
+
+        while matrix.gameOver == False:
+            mouvement.moveDoc(matrix, doc, adj)
+        print('Game Over')
+
+        if matrix.gameOver:
+        #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
+            nomJoueur = menu.nom
+            data =[('Prenom','Point'),(nomJoueur,point.nbrPointsCosmique)]
+            fichier = open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'w')
+            obj = csv.writer(fichier)
+            for element in data:
+                obj.writerow(element)
+            fichier.close()
+
+        #puis afficher les score
+            with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
+                    obj = csv.reader(f)
+                    for ligne in obj:
+                        print(ligne)
+           
+            allerMenu = input("Appuyez sur y pour revenir au menu")
+            if allerMenu == 'y':
+                menu.afficherMenu()
+
+    elif menu.choix == '2':
+                #affiche fichier.csv
+                with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
+                # Créer un objet csv à partir du fichier
+                    obj = csv.reader(f)
+                    for ligne in obj:
+                        print(ligne)
+                print("retour menu? \n")
+                allerMenu = input("APPUYE SUR Y POUR ALLER SUR MENU")
+                if allerMenu == 'y':
+                    os.system('cls')
+                    menu.afficherMenu()
+        
 
 
-os.system('cls')
-adj.afficherMatrix(matrix)
+   
 
-print(positions.getPostionsDaleks())
 
-while matrix.gameOver == False:
-    mouvement.moveDoc(matrix, doc, adj)
+# os.system('cls')
+# adj.afficherMatrix(matrix)
 
-print('Game Over') # test
+# print(positions.getPostionsDaleks())
+
+# while matrix.gameOver == False:
+#     mouvement.moveDoc(matrix, doc, adj)
+
+ # test
 
 #une fois la partie termine inscrit nom + score dans le fichier
-if matrix.gameOver:
-    #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
-    nomJoueur = menu.nom
-    score = point.nbrPointsCosmique
-    
-    data =[('Prenom','Point'),(nomJoueur,score)]
-# Ouvrir le fichier en mode écriture
-    fichier = open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'w')
-# Créer l'objet fichier
-    obj = csv.writer(fichier)
-# Chaque élément de data correspond à une ligne
-    for element in data:
-        obj.writerow(element)
-    fichier.close()
 
-#lire info
-#lire les infos dans le fichier csv
-with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
-    # Créer un objet csv à partir du fichier
-    obj = csv.reader(f)
-
-    for ligne in obj:
-        print(ligne)
     
+

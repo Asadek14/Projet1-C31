@@ -2,6 +2,7 @@ from mimetypes import init
 from pydoc import Doc
 import random
 from turtle import position
+import csv
 
 
  # créer et initialiser le docteur
@@ -98,3 +99,10 @@ class Pointage:
         pass
 
  
+# class AfficherScore:
+#      with open("C:\\Users\\eloya\\OneDrive\\Cours_5e_session\\Genie_Logiciel_I\\Projet1-C31\\liste.csv",'r') as f:
+#             # Créer un objet csv à partir du fichier
+#                 obj = csv.reader(f)
+
+#                 for ligne in obj:
+#                     print(ligne)
