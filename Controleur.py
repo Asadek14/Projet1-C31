@@ -109,30 +109,8 @@ class Positions:
         for x in range(0, len(daleks.positionOccupe)):   
             matrix.array[daleks.positionOccupe[x]] = daleks.VALEUR_DALEKS
             if daleks.positionOccupe[x] != 0:
-                if daleks.compteur != 1:
-                    i = x
-                    j = x
-                    cond1 = True
-                    cond2 = True
-                    
-                    while i > 0:
-                        i -=1
-                        if daleks.positionOccupe[i] == matrix.array[daleks.positionOccupeAncienne[x]]:
-                            cond1 = False
-                            break
-                            
-
-                    while j <= len(daleks.positionOccupe):
-                        j +=1
-                        if daleks.positionOccupe[i] == matrix.array[daleks.positionOccupeAncienne[x]]:
-                            cond2 = False
-                            break
-                            
-
-                    if cond1 and cond2:
-                        matrix.array[daleks.positionOccupeAncienne[x]] = 0
+                    matrix.array[daleks.positionOccupeAncienne[x]] = 0
                     daleks.positionOccupeAncienne[x] = daleks.positionOccupe[x]
-        daleks.compteur += 1
 
 
     def setTfPosition(self, matrix):
@@ -217,7 +195,7 @@ class Mouvement:
             if doc.positionDocActuellle + Matrix.LONGUEUR <= (Matrix.LONGUEUR * Matrix.LARGEUR) - 1:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + Matrix.LONGUEUR):
                     doc.positionDocActuellle += Matrix.LONGUEUR
-                    success = True  
+                    success = True
 
         elif keyboard.is_pressed("Home"):
             if (doc.positionDocActuellle - Matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % Matrix.LONGUEUR != 0:
@@ -372,9 +350,9 @@ daleks = Daleks()
 tf = TasDeFeraille()
 
 # Generer des positions aleatoires pour les daleks 
-# daleks.genererDaleks()
+daleks.genererDaleks()
 positions.setDalekPosition(matrix)
-positions.setTfPosition(matrix)
+# positions.setTfPosition(matrix)
 
 
 
