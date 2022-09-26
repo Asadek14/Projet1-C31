@@ -25,46 +25,66 @@ class Zappeur:
          
             if doc.positionDocActuellle % matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
-                    if matrix.array[doc.positionDocActuellle - 1] in daleks.positionOccupe:
-                        index = daleks.positionOccupe.index(matrix.array[doc.positionDocActuellle - 1])
-                        daleks.positionOccupe.remove(matrix.array[doc.positionDocActuellle - 1])
+                    if doc.positionDocActuellle - 1 in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - 1)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle - 1)
                     matrix.array[doc.positionDocActuellle - 1] = 0
        
         
             if doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
+                    if doc.positionDocActuellle + 1 in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + 1)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle + 1)
                     matrix.array[doc.positionDocActuellle + 1] = 0
  
                 
             if doc.positionDocActuellle - matrix.LONGUEUR >= 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - matrix.LONGUEUR):
-                    doc.positionDocActuellle -= matrix.LONGUEUR 
+                    if doc.positionDocActuellle - matrix.LONGUEUR in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - matrix.LONGUEUR)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle - matrix.LONGUEUR)
+                    matrix.array[doc.positionDocActuellle - matrix.LONGUEUR] = 0
     
                 
             if doc.positionDocActuellle + matrix.LONGUEUR <= (matrix.LONGUEUR * matrix.LARGEUR) - 1:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + matrix.LONGUEUR):
-                    doc.positionDocActuellle += matrix.LONGUEUR
-
+                    if doc.positionDocActuellle + matrix.LONGUEUR in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + matrix.LONGUEUR)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle + matrix.LONGUEUR)
+                    matrix.array[doc.positionDocActuellle + matrix.LONGUEUR] = 0
+                    
 
             if (doc.positionDocActuellle - matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR + 1)):
-                    doc.positionDocActuellle -=  matrix.LONGUEUR + 1
+                    if doc.positionDocActuellle -  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))
+                    matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR + 1)] = 0
 
 
             if (doc.positionDocActuellle - matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR - 1)):
-                    doc.positionDocActuellle -=  matrix.LONGUEUR - 1
+                    if doc.positionDocActuellle -  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))
+                    matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR - 1)] = 0
 
 
             if (doc.positionDocActuellle + matrix.LONGUEUR) - 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR - 1)):
-                    doc.positionDocActuellle +=  matrix.LONGUEUR - 1
-
+                    if doc.positionDocActuellle +  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))
+                    matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR - 1)] = 0
+                    
 
             if (doc.positionDocActuellle + matrix.LONGUEUR) + 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
                 if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR + 1)):
-                    doc.positionDocActuellle +=  matrix.LONGUEUR + 1
-
+                    if doc.positionDocActuellle +  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))
+                    matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR + 1)] = 0
         
 
 class Teleporteur:
@@ -231,8 +251,8 @@ class Mouvement:
                     success = True
                     
         elif keyboard.is_pressed("Z"):
-            pass
-                
+            zappeur.zappeur(matrix, doc, daleks)
+            success = True
                 
         elif keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % matrix.LONGUEUR != 0:
@@ -446,6 +466,7 @@ doc = Docteur()
 daleks = Daleks()
 tf = TasDeFeraille()
 point = Pointage()
+zappeur = Zappeur()
 
 # Generer des positions aleatoires pour les daleks 
 
