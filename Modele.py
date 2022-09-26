@@ -1,5 +1,5 @@
 from mimetypes import init
-from pydoc import Doc
+from pydoc import Doc, doc
 import random
 from turtle import position
 import csv
@@ -8,15 +8,17 @@ import csv
  # créer et initialiser le docteur
 class Docteur:
     nbZappeur = 1
-    POSITION_DOC_INITIALE = 24
     VALEUR_DOC = 1
+    POSITION_DOC_INITIALE = 26
 
     def __init__(self):
+        
         self.positionDocActuellle = self.POSITION_DOC_INITIALE
         self.positionDocAncienne = self.positionDocActuellle
 
-    def initialiserTout(self):
-        self.positionDocActuellle = 24
+    def initialiserTout(self, matrix):
+        self.POSITION_DOC_INITIALE = int((matrix.LONGUEUR * matrix.LARGEUR - 1) / 2)
+        self.positionDocActuellle = self.POSITION_DOC_INITIALE
         self.positionDocAncienne = self.positionDocActuellle
       
         
@@ -40,11 +42,11 @@ class Matrix:
             else:
                 self.array.append(Docteur.VALEUR_DOC)
 
-    def initialiserTout(self):
+    def initialiserTout(self, doc):
         self.gameOver = False
         self.array.clear()
         for i in range(0, self.LONGUEUR * self.LARGEUR):
-            if i != Docteur.POSITION_DOC_INITIALE:
+            if i != doc.POSITION_DOC_INITIALE:
                 self.array.append(0)
             else:
                 self.array.append(Docteur.VALEUR_DOC)
@@ -62,12 +64,12 @@ class Daleks:
         pass
 
     # generateur de positions aléatoires pour les daleks
-    def genererDaleks(self):
+    def genererDaleks(self, matrix):
 
         i = 0
 
         while i < 5:      # 5 daleks * valeur du niveau
-            positionDalek = random.randint(0, (Matrix.LARGEUR * Matrix.LONGUEUR) - 1)
+            positionDalek = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) - 1)
 
             # verifier si la position est la position initiale du docteur
             if positionDalek == Docteur.POSITION_DOC_INITIALE:
@@ -89,7 +91,7 @@ class Daleks:
             i+=1
 
 
-    def initialiserTout(self):
+    def initialiserTout(self, matrix):
 
         self.positionOccupe.clear()
         self.positionOccupeAncienne.clear()
@@ -100,7 +102,7 @@ class Daleks:
         i = 0
 
         while i < 5:      # 5 daleks * valeur du niveau
-            positionDalek = random.randint(0, (Matrix.LARGEUR * Matrix.LONGUEUR) - 1)
+            positionDalek = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) - 1)
 
             # verifier si la position est la position initiale du docteur
             if positionDalek == Docteur.POSITION_DOC_INITIALE:

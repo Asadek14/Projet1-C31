@@ -99,14 +99,14 @@ class Positions:
                 
 
     def setDocPosition(self, matrix, doc):
-        matrix.array[doc.positionDocActuellle] = Docteur.VALEUR_DOC
         matrix.array[doc.positionDocAncienne] = 0
+        matrix.array[doc.positionDocActuellle] = doc.VALEUR_DOC
         doc.positionDocAncienne = doc.positionDocActuellle
 
 
     def setDocPositionInitiale(self, matrix, doc):
         for i in range(0, self.LONGUEUR * self.LARGEUR):
-            if i != Docteur.POSITION_DOC_INITIALE:
+            if i != doc.POSITION_DOC_INITIALE:
                 matrix.array[i] = 0
             else:
                 matrix.array[i] = Docteur.VALEUR_DOC
@@ -114,10 +114,10 @@ class Positions:
 
     def setDalekPosition(self, matrix): 
         for x in range(0, len(daleks.positionOccupe)):   
+            matrix.array[daleks.positionOccupeAncienne[x]] = 0
+            daleks.positionOccupeAncienne[x] = daleks.positionOccupe[x]
+        for x in range(0, len(daleks.positionOccupe)): 
             matrix.array[daleks.positionOccupe[x]] = daleks.VALEUR_DALEKS
-            if daleks.positionOccupe[x] != 0:
-                    matrix.array[daleks.positionOccupeAncienne[x]] = 0
-                    daleks.positionOccupeAncienne[x] = daleks.positionOccupe[x]
 
 
     def setTfPosition(self, matrix):
@@ -180,13 +180,16 @@ class Mouvement:
     def moveDoc(self, matrix, doc, adj, n, menu):
         success = False
         
-        if keyboard.is_pressed("T"):
-                    if menu.niveau == "1": # Facile
-                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
-                    elif menu.niveau == "2": # Moyen
-                        doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
-                    elif menu.niveau == "3": # Difficile
-                        doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
+        if keyboard.is_pressed("space"):
+            success = True 
+
+        elif keyboard.is_pressed("T"):
+            if menu.niveau == "1": # Facile
+                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
+            elif menu.niveau == "2": # Moyen
+                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
+            elif menu.niveau == "3": # Difficile
+                doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
                 
         elif keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % matrix.LONGUEUR != 0:
@@ -262,10 +265,18 @@ class Mouvement:
                 matrix.LONGUEUR += 1
                 matrix.LARGEUR += 1
                 os.system('cls')
+<<<<<<< HEAD
                 matrix.initialiserTout()
                 doc.initialiserTout()
                 daleks.initialiserTout()
                 daleks.genererDaleks()
+=======
+                doc.initialiserTout(matrix)
+                matrix.initialiserTout(doc)
+                daleks.initialiserTout(matrix)
+                for i in range(n.niveau - 1):
+                    daleks.genererDaleks(matrix)
+>>>>>>> e14de4ac99d743fe35a854f76ade408cef0807cb
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
@@ -429,9 +440,11 @@ menu.afficherMenu()
 while sortie != 'y':
     if menu.choix == '1':
 
-        matrix.initialiserTout()
-        doc.initialiserTout()
-        daleks.initialiserTout()
+        matrix.LONGUEUR = 9
+        matrix.LARGEUR = 6
+        doc.initialiserTout(matrix)
+        matrix.initialiserTout(doc)
+        daleks.initialiserTout(matrix)
         point.initialiserTout()
         tf.initialiserTout()
         positions.setDalekPosition(matrix)
