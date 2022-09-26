@@ -27,7 +27,7 @@ class Teleporteur:
         pass
         #if 
     #methode pour teleportation mode de jeu Facile            
-    def tpModeJeuF(self, matrix, daleks, tf):
+    def tpModeJeuF(self, matrix, daleks):
         
         condition = False
         i = 0
@@ -172,18 +172,18 @@ class Positions:
 # Cette classe va s'occuper de bouger les characteres de jeu (Docteur/daleks/TasDeFerailles) dans la matrice si les conditions sont valides
 class Mouvement:
     
-    def __init__(self, modeJeu):
-        self.modeJeu = modeJeu
+    def __init__ (self):
+        pass
     
-    def moveDoc(self, matrix, doc, adj, n):
+    def moveDoc(self, matrix, doc, adj, n, menu):
         success = False
         
         if keyboard.is_pressed("T"):
-                    if self.modeJeu == "F": # Facile
-                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks, tf); success = True
-                    elif self.modeJeu == "M": # Moyen
+                    if menu.niveau == "1": # Facile
+                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
+                    elif menu.niveau == "2": # Moyen
                         doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
-                    elif self.modeJeu == "D": # Difficile
+                    elif menu.niveau == "3": # Difficile
                         doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
                 
         elif keyboard.is_pressed("left arrow"): 
@@ -382,10 +382,12 @@ class Mouvement:
         return True
 
 
-    
+menu = VueMenu()
+sortie = 'n'
+allerMenu = ''    
 
 # Objets de Controleur
-mouvement = Mouvement("F")
+mouvement = Mouvement()
 positions = Positions()
 tp = Teleporteur()
 
@@ -411,9 +413,7 @@ adj.afficherMatrix(matrix)
 n = Niveau()
 
     
-menu = VueMenu()
-sortie = 'n'
-allerMenu = ''
+
 #afficher le menu avec le choix: Soit jouer ou voir score
 #si jouer: entre nom ect...
 #si voir score: afficher liste trié
@@ -449,7 +449,7 @@ while sortie != 'y':
         adj.afficherMatrix(matrix)
 
         while matrix.gameOver == False:
-            mouvement.moveDoc(matrix, doc, adj, n)
+            mouvement.moveDoc(matrix, doc, adj, n, menu)
         print('Game Over')
 
         if matrix.gameOver:
