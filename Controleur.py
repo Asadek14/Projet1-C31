@@ -27,7 +27,7 @@ class Teleporteur:
         pass
         #if 
     #methode pour teleportation mode de jeu Facile            
-    def tpModeJeuF(self, matrix, daleks, tf):
+    def tpModeJeuF(self, matrix, daleks):
         
         condition = False
         i = 0
@@ -172,19 +172,18 @@ class Positions:
 # Cette classe va s'occuper de bouger les characteres de jeu (Docteur/daleks/TasDeFerailles) dans la matrice si les conditions sont valides
 class Mouvement:
     
-    def __init__(self):
+    def __init__ (self):
         pass
     
     def moveDoc(self, matrix, doc, adj, n, menu):
-        self.modeJeu = menu.niveau
         success = False
         
         if keyboard.is_pressed("T"):
-                    if self.modeJeu == "F": # Facile
-                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks, tf); success = True
-                    elif self.modeJeu == "M": # Moyen
+                    if menu.niveau == "1": # Facile
+                        doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
+                    elif menu.niveau == "2": # Moyen
                         doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
-                    elif self.modeJeu == "D": # Difficile
+                    elif menu.niveau == "3": # Difficile
                         doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
                 
         elif keyboard.is_pressed("left arrow"): 
@@ -264,7 +263,8 @@ class Mouvement:
                 matrix.initialiserTout()
                 doc.initialiserTout()
                 daleks.initialiserTout()
-                daleks.genererDaleks()
+                for i in range(n.niveau - 1):
+                    daleks.genererDaleks()
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
@@ -385,7 +385,7 @@ class Mouvement:
 
 menu = VueMenu()
 sortie = 'n'
-allerMenu = ''
+allerMenu = ''    
 
 # Objets de Controleur
 mouvement = Mouvement()

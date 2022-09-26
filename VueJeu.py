@@ -5,10 +5,11 @@ import os
 class AireDeJeu: 
 # adj pour 'aire de jeu'
     def __init__(self):
-        self.ligne = Matrix.LONGUEUR
+        pass
 
     def afficherMatrix(self, matrix):
-        for i in range(0, Matrix.LONGUEUR * Matrix.LARGEUR):
+        self.ligne = matrix.LONGUEUR
+        for i in range(0, matrix.LONGUEUR * matrix.LARGEUR):
             # a chaque 8 valeur change de ligne
             if i % self.ligne == 0:
                 if i != 0:
@@ -27,11 +28,15 @@ class AireDeJeu:
 
 #class VueMenu
 class VueMenu:
-
-    nom = ""
+    
     choix = ""
+    nom = ""
     niveau = ""
-
+    
+    def __init__(self):
+        pass
+        
+    
     def afficherMenu(self) :
         os.system('cls')
         print("Jeu des Daleks")
