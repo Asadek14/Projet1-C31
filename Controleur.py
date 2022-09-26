@@ -10,6 +10,7 @@ os.system("pip install keyboard")
 os.system('cls')
 
 import keyboard
+import datetime
 import time
 import subprocess
 import csv
@@ -497,7 +498,7 @@ while menu.choix != '1' and menu.choix != '2' and menu.choix != '3':
 #Si il a fait le choix de jouer
 while sortie != 'y':
     if menu.choix == '1':
-
+        d = datetime.datetime.now()
         matrix.LONGUEUR = 9
         matrix.LARGEUR = 6
         doc.initialiserTout(matrix)
@@ -529,7 +530,7 @@ while sortie != 'y':
         if matrix.gameOver:
         #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
             nomJoueur = menu.nom
-            data.append('Prenom : ' + str(nomJoueur) + ', Point : ' + str(point.nbrPointsCosmique))
+            data.append('Prenom : ' + str(nomJoueur) + ', Point : ' + str(point.nbrPointsCosmique) + ', Date : ' + d.strftime("%x"))
             fichier = open("liste.csv",'a')
             obj = csv.writer(fichier)
             
