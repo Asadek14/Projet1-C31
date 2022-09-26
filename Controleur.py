@@ -265,18 +265,10 @@ class Mouvement:
                 matrix.LONGUEUR += 1
                 matrix.LARGEUR += 1
                 os.system('cls')
-<<<<<<< HEAD
                 matrix.initialiserTout()
                 doc.initialiserTout()
                 daleks.initialiserTout()
                 daleks.genererDaleks()
-=======
-                doc.initialiserTout(matrix)
-                matrix.initialiserTout(doc)
-                daleks.initialiserTout(matrix)
-                for i in range(n.niveau - 1):
-                    daleks.genererDaleks(matrix)
->>>>>>> e14de4ac99d743fe35a854f76ade408cef0807cb
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
