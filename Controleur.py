@@ -5,6 +5,10 @@ import os
 from turtle import position
 from unittest.util import sorted_list_difference
 # from turtle import position
+
+os.system("pip install keyboard")
+os.system('cls')
+
 import keyboard
 import time
 import subprocess
@@ -408,8 +412,6 @@ positions.setDalekPosition(matrix)
 
 # Objets de VueJeu
 adj = AireDeJeu()
-os.system("pip install keyboard")
-os.system('cls')
 adj.afficherMatrix(matrix)
 n = Niveau()
 

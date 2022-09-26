@@ -62,7 +62,8 @@ class VueMenu:
     def demanderNomEtNiveau(self): 
         # if self.choix == '1':
             self.nom = input("Nom du joueur:")
-            while self.niveau != '1' and self.niveau != '2'and self.niveau != '3':
+            self.niveau = ""
+            while self.niveau != '1' and self.niveau != '2' and self.niveau != '3':
                 print("Choisir mode de jeu pour commencer")     #-> Va determiner le mode de teleportage
                 print("1 - Facile \n")                          #si facile le teleporteur transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
                 print("2 - Moyen\n")                            #idem mais on ne vérifie pas la proximité de Daleks 
