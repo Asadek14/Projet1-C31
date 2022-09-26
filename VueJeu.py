@@ -27,6 +27,11 @@ class AireDeJeu:
 
 #class VueMenu
 class VueMenu:
+
+    nom = ""
+    choix = ""
+    niveau = ""
+
     def afficherMenu(self) :
         os.system('cls')
         print("Jeu des Daleks")

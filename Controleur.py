@@ -172,10 +172,11 @@ class Positions:
 # Cette classe va s'occuper de bouger les characteres de jeu (Docteur/daleks/TasDeFerailles) dans la matrice si les conditions sont valides
 class Mouvement:
     
-    def __init__(self, modeJeu):
-        self.modeJeu = modeJeu
+    def __init__(self):
+        pass
     
-    def moveDoc(self, matrix, doc, adj, n):
+    def moveDoc(self, matrix, doc, adj, n, menu):
+        self.modeJeu = menu.niveau
         success = False
         
         if keyboard.is_pressed("T"):
@@ -382,10 +383,12 @@ class Mouvement:
         return True
 
 
-    
+menu = VueMenu()
+sortie = 'n'
+allerMenu = ''
 
 # Objets de Controleur
-mouvement = Mouvement("F")
+mouvement = Mouvement()
 positions = Positions()
 tp = Teleporteur()
 
@@ -411,9 +414,7 @@ adj.afficherMatrix(matrix)
 n = Niveau()
 
     
-menu = VueMenu()
-sortie = 'n'
-allerMenu = ''
+
 #afficher le menu avec le choix: Soit jouer ou voir score
 #si jouer: entre nom ect...
 #si voir score: afficher liste trié
@@ -449,7 +450,7 @@ while sortie != 'y':
         adj.afficherMatrix(matrix)
 
         while matrix.gameOver == False:
-            mouvement.moveDoc(matrix, doc, adj, n)
+            mouvement.moveDoc(matrix, doc, adj, n, menu)
         print('Game Over')
 
         if matrix.gameOver:
