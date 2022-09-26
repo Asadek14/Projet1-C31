@@ -31,19 +31,13 @@ class Teleporteur:
         
         condition = False
         i = 0
-        positionTP = 0
+        positionTP = 0                        
         
         while i < len(daleks.positionOccupe):
             
             if condition == False:
                 x = 0
                 positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
-                
-                # while x < len(tf.positionTF) :
-                #     if positionTP == tf.positionTF[x]: 
-                #         positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) 
-                #         i = -1; condition = False; continue
-                        
                 condition = True
             
             if positionTP == daleks.positionOccupe[i]:                                          #si la position du TP est la meme que celle d'un 
@@ -65,11 +59,7 @@ class Teleporteur:
             else:
                 i+=1
                 
-        return positionTP            
-                
-                
-            
-        #return positionTP
+        return positionTP
                     
     #methode pour teleportaton mode de jeu moyen        
     def tpModeJeuM(self, matrix, daleks):
@@ -183,11 +173,18 @@ class Mouvement:
 
         elif keyboard.is_pressed("T"):
             if menu.niveau == "1": # Facile
-                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
+                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
+                    success = True
             elif menu.niveau == "2": # Moyen
-                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
+                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
+                    success = True
             elif menu.niveau == "3": # Difficile
-                doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
+                doc.positionDocActuellle = tp.tpModeJeuD(matrix)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
+                    success = True
+                
                 
         elif keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % matrix.LONGUEUR != 0:
@@ -265,9 +262,9 @@ class Mouvement:
                 os.system('cls')
                 doc.initialiserTout(matrix)
                 matrix.initialiserTout(doc)
-                daleks.initialiserTout(matrix)
+                daleks.initialiserTout(matrix, doc)
                 for i in range(n.niveau - 1):
-                    daleks.genererDaleks(matrix)
+                    daleks.genererDaleks(matrix, doc)
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
@@ -423,7 +420,8 @@ n = Niveau()
 #si voir score: afficher liste trié
 #si perd -> affiche score puis proposer rejouer ou quitter
 
-menu.afficherMenu()
+while menu.choix != '1' and menu.choix != '2' and menu.choix != '3':
+    menu.afficherMenu()
 
 #Teleportage si utilisateur veut l'utiliser:
 #a utiliser avec la classe teleporteur
@@ -435,12 +433,13 @@ while sortie != 'y':
         matrix.LARGEUR = 6
         doc.initialiserTout(matrix)
         matrix.initialiserTout(doc)
-        daleks.initialiserTout(matrix)
+        daleks.initialiserTout(matrix, doc)
         point.initialiserTout()
         tf.initialiserTout()
         positions.setDalekPosition(matrix)
         positions.setTfPosition(matrix)
         menu.demanderNomEtNiveau()
+        
         if menu.niveau == '1':#facile
             print("facile")
             #transporte docteur sur une case vide  ayant au moins deux cases de distance des daleks le plus proche
@@ -478,13 +477,19 @@ while sortie != 'y':
             menu.afficherMenu()
 
     elif menu.choix == '2':
-                #affiche fichier.csv
-                with open("liste.csv",'r') as f:
-                # Créer un objet csv à partir du fichier
-                    obj = csv.reader(f)
-                    for ligne in obj:
-                        print(ligne)
-                allerMenu = input("Appuyez sur enter pour revenir au menu")
-                os.system('cls')
-                menu.afficherMenu()
+        #affiche fichier.csv
+        with open("liste.csv",'r') as f:
+        # Créer un objet csv à partir du fichier
+            obj = csv.reader(f)
+            for ligne in obj:
+                print(ligne)
+        allerMenu = input("Appuyez sur enter pour revenir au menu")
+        os.system('cls')
+        menu.afficherMenu()
+    
+    elif menu.choix == '3':
+        os.system('cls')
+        print('Merci! le programme est terminé')
+        sortie = 'y'
+        
         

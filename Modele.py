@@ -64,7 +64,7 @@ class Daleks:
         pass
 
     # generateur de positions aléatoires pour les daleks
-    def genererDaleks(self, matrix):
+    def genererDaleks(self, matrix, doc):
 
         i = 0
 
@@ -72,7 +72,7 @@ class Daleks:
             positionDalek = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) - 1)
 
             # verifier si la position est la position initiale du docteur
-            if positionDalek == Docteur.POSITION_DOC_INITIALE:
+            if positionDalek == doc.POSITION_DOC_INITIALE:
                 continue
 
             # verifier si la position est deja occupee
@@ -91,7 +91,7 @@ class Daleks:
             i+=1
 
 
-    def initialiserTout(self, matrix):
+    def initialiserTout(self, matrix, doc):
 
         self.positionOccupe.clear()
         self.positionOccupeAncienne.clear()
@@ -105,7 +105,7 @@ class Daleks:
             positionDalek = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) - 1)
 
             # verifier si la position est la position initiale du docteur
-            if positionDalek == Docteur.POSITION_DOC_INITIALE:
+            if positionDalek == doc.POSITION_DOC_INITIALE:
                 continue
 
             # verifier si la position est deja occupee
