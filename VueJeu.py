@@ -16,7 +16,7 @@ class AireDeJeu:
                     print('\033[0;37;40m\n')
 
             if matrix.array[i] == 1:
-                print('\033[0;37;46m  ', end = '\033[0;37;40m ') #Medcin = Cyan
+                print('\033[0;37;46m  ', end = '\033[0;37;40m ') #Docteur = Cyan
             elif matrix.array[i] == 2:
                 print('\033[0;37;41m  ', end = '\033[0;37;40m ') #Daleks = Rouge
             elif matrix.array[i] == 3:
@@ -24,6 +24,16 @@ class AireDeJeu:
             else:
                 print('\033[0;37;47m  ', end = '\033[0;37;40m ')
             
+        print('\n')
+        print('Docteur:', '\033[0;37;46m  ', end = '\033[0;37;40m ')
+        print('  Daleks:', '\033[0;37;41m  ', end = '\033[0;37;40m ')
+        print('  Tas de ferraille:', '\033[0;37;43m  ', end = '\033[0;37;40m ')
+        
+        print('\n')
+        print('Mouvement docteur: \033[0;33;40m\u2190 \u2191 \u2192 \u2193 \u2196 \u2197 \u2198 \u2199' , end = '\033[0;37;40m ')
+        print("  Téléporteur:", "\033[0;33;40m'T'", end = "\033[0;37;40m ")
+        print("  Zappeur:", "\033[0;33;40m'Z'", end = "\033[0;37;40m ")   
+        print("  Passer son tour:", "\033[0;33;40m'Spacebar'", end = "\033[0;37;40m ")   
         print("\n")
 
 #class VueMenu
@@ -38,6 +48,7 @@ class VueMenu:
         
     
     def afficherMenu(self) :
+        
         os.system('cls')
         print("Jeu des Daleks")
         print("\n")
@@ -49,10 +60,10 @@ class VueMenu:
     def demanderNomEtNiveau(self): 
         # if self.choix == '1':
             self.nom = input("Nom du joueur:")
-            print("Choisir mode de jeu pour commencer")#-> Va determiner le mode de teleportage
-            print("1 - Facile \n")#si facile le teleporteur transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
-            print("2 - Moyen\n")#  idem mais on ne vérifie pas la proximité de Daleks 
-            print("3 - Difficile")#téléportage est complètement aléatoire et donc on peut atterrir sur un Dalek
+            print("Choisir mode de jeu pour commencer")     #-> Va determiner le mode de teleportage
+            print("1 - Facile \n")                          #si facile le teleporteur transporte docteur sur une case vide  ayant au moins deux cases de distance des Daleks le plus proche
+            print("2 - Moyen\n")                            #idem mais on ne vérifie pas la proximité de Daleks 
+            print("3 - Difficile")                          #téléportage est complètement aléatoire et donc on peut atterrir sur un Dalek
             self.niveau = input("choix niveau: ")
 
         # elif self.choix == '2':

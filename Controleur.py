@@ -5,6 +5,8 @@ import os
 from turtle import position
 from unittest.util import sorted_list_difference
 # from turtle import position
+
+import maskpass
 import keyboard
 import time
 import subprocess
@@ -263,8 +265,7 @@ class Mouvement:
                 matrix.initialiserTout()
                 doc.initialiserTout()
                 daleks.initialiserTout()
-                for i in range(n.niveau - 1):
-                    daleks.genererDaleks()
+                daleks.genererDaleks()
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
