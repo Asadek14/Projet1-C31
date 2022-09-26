@@ -165,3 +165,8 @@ class Niveau:
     
     def __init__(self):
         self.niveau = 1
+        
+class NbZappeurs:
+    
+    def __init__(self):
+        self.nbZappeurs = 1

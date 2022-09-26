@@ -1,4 +1,4 @@
-from Modele import Daleks, Matrix
+from Modele import Daleks, Matrix, NbZappeurs
 import csv
 import os
 
@@ -7,7 +7,7 @@ class AireDeJeu:
     def __init__(self):
         pass
 
-    def afficherMatrix(self, matrix):
+    def afficherMatrix(self, matrix, nbZappeurs):
         self.ligne = matrix.LONGUEUR
         for i in range(0, matrix.LONGUEUR * matrix.LARGEUR):
             # a chaque 8 valeur change de ligne
@@ -24,6 +24,9 @@ class AireDeJeu:
             else:
                 print('\033[0;37;47m  ', end = '\033[0;37;40m ')
             
+            
+        print('\n')
+        print("Nombre de Zappeurs: " + str(nbZappeurs.nbZappeurs))
         print('\n')
         print('Docteur:', '\033[0;37;46m  ', end = '\033[0;37;40m ')
         print('  Daleks:', '\033[0;37;41m  ', end = '\033[0;37;40m ')

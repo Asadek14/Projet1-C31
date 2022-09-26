@@ -14,7 +14,7 @@ import time
 import subprocess
 import csv
 from VueJeu import AireDeJeu,VueMenu 
-from Modele import Daleks, Docteur, Matrix, Niveau, TasDeFeraille, Pointage
+from Modele import Daleks, Docteur, Matrix, NbZappeurs, Niveau, TasDeFeraille, Pointage
 import random
 
 class Zappeur:
@@ -251,8 +251,10 @@ class Mouvement:
                     success = True
                     
         elif keyboard.is_pressed("Z"):
-            zappeur.zappeur(matrix, doc, daleks)
-            success = True
+            if nbZappeurs.nbZappeurs != 0:
+                zappeur.zappeur(matrix, doc, daleks)
+                success = True
+                nbZappeurs.nbZappeurs -= 1
                 
         elif keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % matrix.LONGUEUR != 0:
@@ -306,7 +308,7 @@ class Mouvement:
         if success == True:
             positions.setDocPosition(matrix, doc)
             os.system('cls')
-            adj.afficherMatrix(matrix)
+            adj.afficherMatrix(matrix, nbZappeurs)
             time.sleep(1) 
             if mouvement.verifierCollisionDoc_Dalek(daleks):      # verifie si le docteur va sur le dalek
                 matrix.gameOver = True
@@ -321,10 +323,11 @@ class Mouvement:
             positions.setTfPosition(matrix)
             positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
             os.system('cls')
-            adj.afficherMatrix(matrix)
+            adj.afficherMatrix(matrix, nbZappeurs)
 
             # prochain niveau
             if positions.prochainNiveau(daleks, n):
+                nbZappeurs.nbZappeurs += 1
                 matrix.LONGUEUR += 1
                 matrix.LARGEUR += 1
                 os.system('cls')
@@ -336,7 +339,7 @@ class Mouvement:
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
-                adj.afficherMatrix(matrix)
+                adj.afficherMatrix(matrix, nbZappeurs)
             
             time.sleep(0.2)      
             
@@ -467,6 +470,7 @@ daleks = Daleks()
 tf = TasDeFeraille()
 point = Pointage()
 zappeur = Zappeur()
+nbZappeurs = NbZappeurs()
 
 # Generer des positions aleatoires pour les daleks 
 
@@ -477,7 +481,7 @@ positions.setDalekPosition(matrix)
 
 # Objets de VueJeu
 adj = AireDeJeu()
-adj.afficherMatrix(matrix)
+adj.afficherMatrix(matrix, nbZappeurs)
 n = Niveau()
 data = list()
 i = 0
@@ -520,7 +524,7 @@ while sortie != 'y':
             #téléportage est complètement aléatoire et donc on peut atterrir sur un daleks
 
         os.system('cls')
-        adj.afficherMatrix(matrix)
+        adj.afficherMatrix(matrix, nbZappeurs)
 
         while matrix.gameOver == False:
             mouvement.moveDoc(matrix, doc, adj, n, menu)
