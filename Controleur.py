@@ -21,10 +21,51 @@ class Zappeur:
     def __init__(self):
         pass
     
-    def zappeur(self, doc):
-        if doc.nbZappeur != 0:
-            
-            pass
+    def zappeur(self, matrix, doc, daleks):
+         
+            if doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
+                    if matrix.array[doc.positionDocActuellle - 1] in daleks.positionOccupe:
+                        index = daleks.positionOccupe.index(matrix.array[doc.positionDocActuellle - 1])
+                        daleks.positionOccupe.remove(matrix.array[doc.positionDocActuellle - 1])
+                    matrix.array[doc.positionDocActuellle - 1] = 0
+       
+        
+            if doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
+                    matrix.array[doc.positionDocActuellle + 1] = 0
+ 
+                
+            if doc.positionDocActuellle - matrix.LONGUEUR >= 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - matrix.LONGUEUR):
+                    doc.positionDocActuellle -= matrix.LONGUEUR 
+    
+                
+            if doc.positionDocActuellle + matrix.LONGUEUR <= (matrix.LONGUEUR * matrix.LARGEUR) - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + matrix.LONGUEUR):
+                    doc.positionDocActuellle += matrix.LONGUEUR
+
+
+            if (doc.positionDocActuellle - matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR + 1)):
+                    doc.positionDocActuellle -=  matrix.LONGUEUR + 1
+
+
+            if (doc.positionDocActuellle - matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR - 1)):
+                    doc.positionDocActuellle -=  matrix.LONGUEUR - 1
+
+
+            if (doc.positionDocActuellle + matrix.LONGUEUR) - 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR - 1)):
+                    doc.positionDocActuellle +=  matrix.LONGUEUR - 1
+
+
+            if (doc.positionDocActuellle + matrix.LONGUEUR) + 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR + 1)):
+                    doc.positionDocActuellle +=  matrix.LONGUEUR + 1
+
+        
 
 class Teleporteur:
     def __init__(self):
@@ -188,6 +229,9 @@ class Mouvement:
                 doc.positionDocActuellle = tp.tpModeJeuD(matrix)
                 if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
                     success = True
+                    
+        elif keyboard.is_pressed("Z"):
+            pass
                 
                 
         elif keyboard.is_pressed("left arrow"): 
@@ -414,6 +458,8 @@ positions.setDalekPosition(matrix)
 adj = AireDeJeu()
 adj.afficherMatrix(matrix)
 n = Niveau()
+data = list()
+i = 0
 
     
 
@@ -462,12 +508,14 @@ while sortie != 'y':
         if matrix.gameOver:
         #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
             nomJoueur = menu.nom
-            data =[('Prenom','Point'),(nomJoueur,point.nbrPointsCosmique)]
-            fichier = open("liste.csv",'w')
+            data.append('Prenom : ' + str(nomJoueur) + ', Point : ' + str(point.nbrPointsCosmique))
+            fichier = open("liste.csv",'a')
             obj = csv.writer(fichier)
-            for element in data:
-                obj.writerow(element)
+            
+            ligne = data[i]
+            obj.writerow({ligne})
             fichier.close()
+            i+=1
 
         #puis afficher les score
             with open("liste.csv",'r') as f:
