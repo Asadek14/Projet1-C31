@@ -101,7 +101,7 @@ class Teleporteur:
         pass
         #if 
     #methode pour teleportation mode de jeu Facile            
-    def tpModeJeuF(self, matrix, daleks):
+    def tpModeJeuF(self, matrix, daleks, doc):
         
         condition = False
         i = 0
@@ -112,6 +112,8 @@ class Teleporteur:
             if condition == False:
                 x = 0
                 positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
+                if positionTP == doc.positionDocActuellle:
+                    continue
                 condition = True
             
             if positionTP == daleks.positionOccupe[i]:                                          #si la position du TP est la meme que celle d'un 
@@ -136,9 +138,11 @@ class Teleporteur:
         return positionTP
                     
     #methode pour teleportaton mode de jeu moyen        
-    def tpModeJeuM(self, matrix, daleks):
+    def tpModeJeuM(self, matrix, daleks, doc):
         while True:
             positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1)
+            if positionTP == doc.positionDocActuellle:
+                    continue
 
             for pOcc in daleks.positionOccupe:
                 if positionTP == pOcc:
@@ -247,16 +251,16 @@ class Mouvement:
 
         elif keyboard.is_pressed("T"):
             if menu.niveau == "1": # Facile
-                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks)
-                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
+                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks, doc)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks, doc)):
                     success = True
             elif menu.niveau == "2": # Moyen
-                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks)
-                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
+                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks, doc)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuM(matrix, daleks, doc)):
                     success = True
             elif menu.niveau == "3": # Difficile
                 doc.positionDocActuellle = tp.tpModeJeuD(matrix)
-                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks)):
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuD(matrix)):
                     success = True
                     
         elif keyboard.is_pressed("Z"):
@@ -318,7 +322,7 @@ class Mouvement:
             positions.setDocPosition(matrix, doc)
             os.system('cls')
             adj.afficherMatrix(matrix, nbZappeurs)
-            time.sleep(1) 
+            time.sleep(0.5) 
             if mouvement.verifierCollisionDoc_Dalek(daleks):      # verifie si le docteur va sur le dalek
                 matrix.gameOver = True
             mouvement.moveDalek(positions.getPostionsDaleks(daleks), positions.getPostionsDoc(doc))
@@ -568,7 +572,8 @@ while sortie != 'y':
             obj = csv.reader(f)
             for ligne in obj:
                 print(ligne)
-        allerMenu = input("Appuyez sur enter pour revenir au menu")
+        print("Appuyez sur enter pour revenir au menu")
+        allerMenu = input()
         os.system('cls')
         menu.afficherMenu()
     

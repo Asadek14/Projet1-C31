@@ -53,7 +53,7 @@ class VueMenu:
     def afficherMenu(self) :
         
         os.system('cls')
-        print("Jeu des Daleks  (S'il vous plait agrandir la fenetre de console le plus haut possible!)")
+        print("Jeu des Daleks  \033[0;33;40m(S'il vous plait agrandir la fenetre de console le plus haut possible!)", end = "\033[0;37;40m ")
         print("\n")
         print("1/ Jouer")
         print("\n")
