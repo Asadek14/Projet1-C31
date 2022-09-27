@@ -6,7 +6,7 @@ Remettre le 26 septembre. Faire un jeu de Daleks. Le but: le docteur, contrôlé
 
 ### Projet réalisé par l'équipe C
 
-Ahmed Sadek
-Aurélien Eloy
-Marcelo Michel Figueroa Ricardo
+Ahmed Sadek, 
+Aurélien Eloy, 
+Marcelo Michel Figueroa Ricardo, 
 Erick Ricardo Delgado Garcia
