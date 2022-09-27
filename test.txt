@@ -1,8 +1,0 @@
-Nom,Pr�nom,Age
-
-Dubois,Marie,40
-
-Bernard,Sarah,32
-
-Thomas,Henri,38
-
