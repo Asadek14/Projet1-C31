@@ -23,78 +23,78 @@ class Zappeur:
         pass
     
     def zappeur(self, matrix, doc, daleks, point):
-         
-            if doc.positionDocActuellle % matrix.LONGUEUR != 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
-                    if doc.positionDocActuellle - 1 in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - 1)]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle - 1)
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle - 1] = 0
-       
         
-            if doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
-                    if doc.positionDocActuellle + 1 in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + 1)]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle + 1)
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle + 1] = 0
- 
-                
-            if doc.positionDocActuellle - matrix.LONGUEUR >= 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - matrix.LONGUEUR):
-                    if doc.positionDocActuellle - matrix.LONGUEUR in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - matrix.LONGUEUR)]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle - matrix.LONGUEUR)
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle - matrix.LONGUEUR] = 0
+        if doc.positionDocActuellle % matrix.LONGUEUR != 0:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
+                if doc.positionDocActuellle - 1 in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - 1)]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle - 1)
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle - 1] = 0
     
+    
+        if doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
+                if doc.positionDocActuellle + 1 in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + 1)]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle + 1)
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle + 1] = 0
+
+            
+        if doc.positionDocActuellle - matrix.LONGUEUR >= 0:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - matrix.LONGUEUR):
+                if doc.positionDocActuellle - matrix.LONGUEUR in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - matrix.LONGUEUR)]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle - matrix.LONGUEUR)
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle - matrix.LONGUEUR] = 0
+
+            
+        if doc.positionDocActuellle + matrix.LONGUEUR <= (matrix.LONGUEUR * matrix.LARGEUR) - 1:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + matrix.LONGUEUR):
+                if doc.positionDocActuellle + matrix.LONGUEUR in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + matrix.LONGUEUR)]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle + matrix.LONGUEUR)
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle + matrix.LONGUEUR] = 0
                 
-            if doc.positionDocActuellle + matrix.LONGUEUR <= (matrix.LONGUEUR * matrix.LARGEUR) - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + matrix.LONGUEUR):
-                    if doc.positionDocActuellle + matrix.LONGUEUR in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + matrix.LONGUEUR)]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle + matrix.LONGUEUR)
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle + matrix.LONGUEUR] = 0
-                    
 
-            if (doc.positionDocActuellle - matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR + 1)):
-                    if doc.positionDocActuellle -  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR + 1)] = 0
+        if (doc.positionDocActuellle - matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR + 1)):
+                if doc.positionDocActuellle -  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR + 1)] = 0
 
 
-            if (doc.positionDocActuellle - matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR - 1)):
-                    if doc.positionDocActuellle -  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR - 1)] = 0
+        if (doc.positionDocActuellle - matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR - 1)):
+                if doc.positionDocActuellle -  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR - 1)] = 0
 
 
-            if (doc.positionDocActuellle + matrix.LONGUEUR) - 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR - 1)):
-                    if doc.positionDocActuellle +  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR - 1)] = 0
-                    
+        if (doc.positionDocActuellle + matrix.LONGUEUR) - 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR - 1)):
+                if doc.positionDocActuellle +  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR - 1)] = 0
+                
 
-            if (doc.positionDocActuellle + matrix.LONGUEUR) + 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
-                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR + 1)):
-                    if doc.positionDocActuellle +  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
-                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))]
-                        daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))
-                        point.nbrPointsCosmique += 5
-                    matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR + 1)] = 0
-        
+        if (doc.positionDocActuellle + matrix.LONGUEUR) + 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+            if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR + 1)):
+                if doc.positionDocActuellle +  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
+                    del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))]
+                    daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))
+                    point.nbrPointsCosmique += 5
+                matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR + 1)] = 0
+    
 
 class Teleporteur:
     def __init__(self):

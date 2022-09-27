@@ -5,7 +5,7 @@ from turtle import position
 import csv
 
 
- # créer et initialiser le docteur
+#créer et initialiser le docteur
 class Docteur:
     nbZappeur = 1
     VALEUR_DOC = 1
