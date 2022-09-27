@@ -8,7 +8,7 @@ from unittest.util import sorted_list_difference
 
 os.system("pip install keyboard")
 os.system('cls')
-#com pour push
+#Release v1
 import keyboard
 import time
 import datetime

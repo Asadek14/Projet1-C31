@@ -3,7 +3,7 @@ from pydoc import Doc, doc
 import random
 from turtle import position
 import csv
-
+#Release v1
 
 #créer et initialiser le docteur
 class Docteur:
