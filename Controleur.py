@@ -5,45 +5,115 @@ import os
 from turtle import position
 from unittest.util import sorted_list_difference
 # from turtle import position
+
+os.system("pip install keyboard")
+os.system('cls')
+
 import keyboard
 import time
+import datetime
 import subprocess
 import csv
 from VueJeu import AireDeJeu,VueMenu 
-from Modele import Daleks, Docteur, Matrix, Niveau, TasDeFeraille, Pointage
+from Modele import Daleks, Docteur, Matrix, NbZappeurs, Niveau, TasDeFeraille, Pointage
 import random
 
 class Zappeur:
     def __init__(self):
         pass
     
-    def zappeur(self, doc):
-        if doc.nbZappeur != 0:
-            
-            pass
+    def zappeur(self, matrix, doc, daleks, point):
+         
+            if doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - 1):
+                    if doc.positionDocActuellle - 1 in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - 1)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle - 1)
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle - 1] = 0
+       
+        
+            if doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + 1):
+                    if doc.positionDocActuellle + 1 in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + 1)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle + 1)
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle + 1] = 0
+ 
+                
+            if doc.positionDocActuellle - matrix.LONGUEUR >= 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle - matrix.LONGUEUR):
+                    if doc.positionDocActuellle - matrix.LONGUEUR in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle - matrix.LONGUEUR)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle - matrix.LONGUEUR)
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle - matrix.LONGUEUR] = 0
+    
+                
+            if doc.positionDocActuellle + matrix.LONGUEUR <= (matrix.LONGUEUR * matrix.LARGEUR) - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle + matrix.LONGUEUR):
+                    if doc.positionDocActuellle + matrix.LONGUEUR in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle + matrix.LONGUEUR)]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle + matrix.LONGUEUR)
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle + matrix.LONGUEUR] = 0
+                    
+
+            if (doc.positionDocActuellle - matrix.LONGUEUR) - 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR + 1)):
+                    if doc.positionDocActuellle -  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR + 1))
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR + 1)] = 0
+
+
+            if (doc.positionDocActuellle - matrix.LONGUEUR) + 1 >= 0 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle -  (matrix.LONGUEUR - 1)):
+                    if doc.positionDocActuellle -  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle -  (matrix.LONGUEUR - 1))
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle -  (matrix.LONGUEUR - 1)] = 0
+
+
+            if (doc.positionDocActuellle + matrix.LONGUEUR) - 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != 0:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR - 1)):
+                    if doc.positionDocActuellle +  (matrix.LONGUEUR - 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR - 1))
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR - 1)] = 0
+                    
+
+            if (doc.positionDocActuellle + matrix.LONGUEUR) + 1 <= (matrix.LONGUEUR * matrix.LARGEUR) - 1 and doc.positionDocActuellle % matrix.LONGUEUR != matrix.LONGUEUR - 1:
+                if mouvement.verifierCollisionDoc_Tf(doc.positionDocActuellle +  (matrix.LONGUEUR + 1)):
+                    if doc.positionDocActuellle +  (matrix.LONGUEUR + 1) in daleks.positionOccupe:
+                        del daleks.positionOccupeAncienne[daleks.positionOccupe.index(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))]
+                        daleks.positionOccupe.remove(doc.positionDocActuellle +  (matrix.LONGUEUR + 1))
+                        point.nbrPointsCosmique += 5
+                    matrix.array[doc.positionDocActuellle +  (matrix.LONGUEUR + 1)] = 0
+        
 
 class Teleporteur:
     def __init__(self):
         pass
         #if 
     #methode pour teleportation mode de jeu Facile            
-    def tpModeJeuF(self, matrix, daleks):
+    def tpModeJeuF(self, matrix, daleks, doc):
         
         condition = False
         i = 0
-        positionTP = 0
+        positionTP = 0                        
         
         while i < len(daleks.positionOccupe):
             
             if condition == False:
                 x = 0
                 positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) #generation position aleatoire pour TP
-                
-                # while x < len(tf.positionTF) :
-                #     if positionTP == tf.positionTF[x]: 
-                #         positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1) 
-                #         i = -1; condition = False; continue
-                        
+                if positionTP == doc.positionDocActuellle:
+                    continue
                 condition = True
             
             if positionTP == daleks.positionOccupe[i]:                                          #si la position du TP est la meme que celle d'un 
@@ -65,16 +135,14 @@ class Teleporteur:
             else:
                 i+=1
                 
-        return positionTP            
-                
-                
-            
-        #return positionTP
+        return positionTP
                     
     #methode pour teleportaton mode de jeu moyen        
-    def tpModeJeuM(self, matrix, daleks):
+    def tpModeJeuM(self, matrix, daleks, doc):
         while True:
             positionTP = random.randint(0, (matrix.LARGEUR * matrix.LONGUEUR) -1)
+            if positionTP == doc.positionDocActuellle:
+                    continue
 
             for pOcc in daleks.positionOccupe:
                 if positionTP == pOcc:
@@ -183,11 +251,23 @@ class Mouvement:
 
         elif keyboard.is_pressed("T"):
             if menu.niveau == "1": # Facile
-                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks); success = True
+                doc.positionDocActuellle = tp.tpModeJeuF(matrix, daleks, doc)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuF(matrix, daleks, doc)):
+                    success = True
             elif menu.niveau == "2": # Moyen
-                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks); success = True
+                doc.positionDocActuellle = tp.tpModeJeuM(matrix, daleks, doc)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuM(matrix, daleks, doc)):
+                    success = True
             elif menu.niveau == "3": # Difficile
-                doc.positionDocActuellle = tp.tpModeJeuD(matrix); success = True
+                doc.positionDocActuellle = tp.tpModeJeuD(matrix)
+                if self.verifierCollisionDoc_Tf(tp.tpModeJeuD(matrix)):
+                    success = True
+                    
+        elif keyboard.is_pressed("Z"):
+            if nbZappeurs.nbZappeurs != 0:
+                zappeur.zappeur(matrix, doc, daleks, point)
+                success = True
+                nbZappeurs.nbZappeurs -= 1
                 
         elif keyboard.is_pressed("left arrow"): 
             if doc.positionDocActuellle % matrix.LONGUEUR != 0:
@@ -241,8 +321,8 @@ class Mouvement:
         if success == True:
             positions.setDocPosition(matrix, doc)
             os.system('cls')
-            adj.afficherMatrix(matrix)
-            time.sleep(1) 
+            adj.afficherMatrix(matrix, nbZappeurs)
+            time.sleep(0.5) 
             if mouvement.verifierCollisionDoc_Dalek(daleks):      # verifie si le docteur va sur le dalek
                 matrix.gameOver = True
             mouvement.moveDalek(positions.getPostionsDaleks(daleks), positions.getPostionsDoc(doc))
@@ -256,22 +336,23 @@ class Mouvement:
             positions.setTfPosition(matrix)
             positions.setDalekPosition(matrix)  # code bug, erreur avec positionDalekAncienne 
             os.system('cls')
-            adj.afficherMatrix(matrix)
+            adj.afficherMatrix(matrix, nbZappeurs)
 
             # prochain niveau
             if positions.prochainNiveau(daleks, n):
+                nbZappeurs.nbZappeurs += 1
                 matrix.LONGUEUR += 1
                 matrix.LARGEUR += 1
                 os.system('cls')
                 doc.initialiserTout(matrix)
                 matrix.initialiserTout(doc)
-                daleks.initialiserTout(matrix)
+                daleks.initialiserTout(matrix, doc)
                 for i in range(n.niveau - 1):
-                    daleks.genererDaleks(matrix)
+                    daleks.genererDaleks(matrix, doc)
                 tf.initialiserTout()
                 positions.setDalekPosition(matrix)
                 positions.setTfPosition(matrix) 
-                adj.afficherMatrix(matrix)
+                adj.afficherMatrix(matrix, nbZappeurs)
             
             time.sleep(0.2)      
             
@@ -401,6 +482,8 @@ doc = Docteur()
 daleks = Daleks()
 tf = TasDeFeraille()
 point = Pointage()
+zappeur = Zappeur()
+nbZappeurs = NbZappeurs()
 
 # Generer des positions aleatoires pour les daleks 
 
@@ -411,10 +494,10 @@ positions.setDalekPosition(matrix)
 
 # Objets de VueJeu
 adj = AireDeJeu()
-os.system("pip install keyboard")
-os.system('cls')
-adj.afficherMatrix(matrix)
+adj.afficherMatrix(matrix, nbZappeurs)
 n = Niveau()
+data = list()
+i = 0
 
     
 
@@ -423,7 +506,8 @@ n = Niveau()
 #si voir score: afficher liste trié
 #si perd -> affiche score puis proposer rejouer ou quitter
 
-menu.afficherMenu()
+while menu.choix != '1' and menu.choix != '2' and menu.choix != '3':
+    menu.afficherMenu()
 
 #Teleportage si utilisateur veut l'utiliser:
 #a utiliser avec la classe teleporteur
@@ -431,16 +515,18 @@ menu.afficherMenu()
 while sortie != 'y':
     if menu.choix == '1':
 
+        d = datetime.datetime.now()
         matrix.LONGUEUR = 9
         matrix.LARGEUR = 6
         doc.initialiserTout(matrix)
         matrix.initialiserTout(doc)
-        daleks.initialiserTout(matrix)
+        daleks.initialiserTout(matrix, doc)
         point.initialiserTout()
         tf.initialiserTout()
         positions.setDalekPosition(matrix)
         positions.setTfPosition(matrix)
         menu.demanderNomEtNiveau()
+        
         if menu.niveau == '1':#facile
             print("facile")
             #transporte docteur sur une case vide  ayant au moins deux cases de distance des daleks le plus proche
@@ -452,7 +538,7 @@ while sortie != 'y':
             #téléportage est complètement aléatoire et donc on peut atterrir sur un daleks
 
         os.system('cls')
-        adj.afficherMatrix(matrix)
+        adj.afficherMatrix(matrix, nbZappeurs)
 
         while matrix.gameOver == False:
             mouvement.moveDoc(matrix, doc, adj, n, menu)
@@ -461,12 +547,14 @@ while sortie != 'y':
         if matrix.gameOver:
         #ecrire les infos dans le fichier csv QUAND LA PARTIE EST TERMINEE
             nomJoueur = menu.nom
-            data =[('Prenom','Point'),(nomJoueur,point.nbrPointsCosmique)]
-            fichier = open("liste.csv",'w')
+            data.append('Prenom : ' + str(nomJoueur) + ', Point : ' + str(point.nbrPointsCosmique) + ", Date : " + d.strftime("%x"))
+            fichier = open("liste.csv",'a')
             obj = csv.writer(fichier)
-            for element in data:
-                obj.writerow(element)
+            
+            ligne = data[i]
+            obj.writerow({ligne})
             fichier.close()
+            i+=1
 
         #puis afficher les score
             with open("liste.csv",'r') as f:
@@ -478,13 +566,20 @@ while sortie != 'y':
             menu.afficherMenu()
 
     elif menu.choix == '2':
-                #affiche fichier.csv
-                with open("liste.csv",'r') as f:
-                # Créer un objet csv à partir du fichier
-                    obj = csv.reader(f)
-                    for ligne in obj:
-                        print(ligne)
-                allerMenu = input("Appuyez sur enter pour revenir au menu")
-                os.system('cls')
-                menu.afficherMenu()
+        #affiche fichier.csv
+        with open("liste.csv",'r') as f:
+        # Créer un objet csv à partir du fichier
+            obj = csv.reader(f)
+            for ligne in obj:
+                print(ligne)
+        print("Appuyez sur enter pour revenir au menu")
+        allerMenu = input()
+        os.system('cls')
+        menu.afficherMenu()
+    
+    elif menu.choix == '3':
+        os.system('cls')
+        print('Merci! le programme est terminé')
+        sortie = 'y'
+        
         
